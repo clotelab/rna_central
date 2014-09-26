@@ -1,0 +1,11 @@
+{
+  "name":    "repl_plus",
+  "version": "0.0.0",
+  "private": true,
+  "main":    "./repl.js",
+  "bin":     "./repl.js",
+  "dependencies": {
+    "repl-it":        "1.0.1",
+    "ansi-highlight": "1.0.2"
+  }
+}
