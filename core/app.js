@@ -1,12 +1,13 @@
 var express       = require("express");
-var _             = require("underscore");
+var __            = require("underscore");
+var vhost         = require("vhost");
 var path          = require("path");
 var favicon       = require("serve-favicon");
 var logger        = require("morgan");
 var cookie_parser = require("cookie-parser");
 var body_parser   = require("body-parser");
-var routes        = require("./routes/index");
-var users         = require("./routes/users");
+var debug         = require("debug")("rna_central:core");
+var routes        = require("./routes");
 var app           = express();
 
 // view engine setup
@@ -23,19 +24,36 @@ app.use(require("stylus").middleware(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", routes);
-app.use("/users", users);
 
-// catch 404 and forward to error handler
+app.param("webserver", function(req, res, next, webserver) {
+  try {
+    var server    = __.chain(String.prototype.split.call(webserver, "/")).reject(__.isEmpty).first().value();
+    var webserver = require("../webservers/" + server);
+    req.subapp    = webserver;
+    debug("Successfully found the " + server + " webserver");
+  } catch (error) {
+    debug(error.message);
+  }
+  
+  next();
+});
+
+app.use("/:webserver", function(req, res, next) {
+  if (__.isUndefined(req.subapp)) {
+    next();
+  } else {
+    req.subapp(req, res, next);
+  }
+});
+
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err    = new Error("Not Found");
   err.status = 404;
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
+// Development error handler, will print stacktrace
 if (app.get("env") === "development") {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -46,8 +64,7 @@ if (app.get("env") === "development") {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
+// Production error handler, no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error", {
@@ -56,4 +73,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-module.exports = app;
+exports = module.exports = app;

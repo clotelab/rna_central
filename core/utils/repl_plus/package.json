@@ -5,6 +5,7 @@
   "main":    "./repl.js",
   "bin":     "./repl.js",
   "dependencies": {
+    "underscore":     "1.7.0",
     "repl-it":        "1.0.1",
     "ansi-highlight": "1.0.2"
   }
