@@ -10,18 +10,27 @@ var debug         = require("debug")("rna_central:core");
 var routes        = require("./routes");
 var app           = express();
 
-// view engine setup
+// View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + "/public/favicon.ico"));
+// app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use(logger("dev"));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 app.use(cookie_parser());
 app.use(require("stylus").middleware(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public")));
+
+__.each(["pure-min", "grids-responsive-min", "grids-responsive-old-ie-min"], function(file) {
+  app.get("/stylesheets/" + file + ".css", function(req, res) {
+      res.sendFile(path.join(__dirname, "..", "node_modules", "purecss", file + ".css"));
+  });
+});
+
+app.get("/stylesheets/font-awesome.min.css", function(req, res) {
+    res.sendFile(path.join(__dirname, "..", "node_modules", "font-awesome", "css", "font-awesome.min.css"));
+});
 
 app.use("/", routes);
 

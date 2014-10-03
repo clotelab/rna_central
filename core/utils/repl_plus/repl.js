@@ -9,7 +9,7 @@ var repl = exports = module.exports = function() {
   global.__   = __;
   global.repl = {
     "ap": function(object) {
-      console.log(_.isFunction(object) ? highlight(object.toString()) : object);
+      console.log(__.isFunction(object) ? highlight(object.toString()) : object);
     }
   };
   
