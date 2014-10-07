@@ -2,7 +2,14 @@
   font-weight: 300;
 }
 #layout #menu .pure-menu-heading {
+  background-color: #000;
+  font-size: 125%;
   text-transform: none;
+/** To edit this background, follow this link:
+      http://svgeneration.com/generate/Diagonal-Stripes?scale=10&stripe=111&stripe-width=.5&background=000000&
+      */
+  background-color: #000;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScyMCcgdmlld0JveD0nMCAwIDUgMTAnPgoJPHJlY3Qgd2lkdGg9JzExMCUnIHg9Jy01JScgeT0nLTUlJyBoZWlnaHQ9JzExMCUnIGZpbGw9JyMwMDAwMDAnLz4KCTxsaW5lIHgxPSctMicgeTE9JzEnIHgyPSc3JyB5Mj0nMTAnIHN0cm9rZT0nIzExMScgc3Ryb2tlLXdpZHRoPScuNScvPgoJPGxpbmUgeDE9Jy0yJyB5MT0nNicgeDI9JzcnIHkyPScxNScgc3Ryb2tlPScjMTExJyBzdHJva2Utd2lkdGg9Jy41Jy8+Cgk8bGluZSB4MT0nLTInIHkxPSctNCcgeDI9JzcnIHkyPSc1JyBzdHJva2U9JyMxMTEnIHN0cm9rZS13aWR0aD0nLjUnLz4KPC9zdmc+");
 }
 #layout #main .header {
 /** To edit this background, follow this link: 

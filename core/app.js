@@ -1,6 +1,5 @@
 var express       = require("express");
 var __            = require("underscore");
-var vhost         = require("vhost");
 var path          = require("path");
 var favicon       = require("serve-favicon");
 var logger        = require("morgan");
