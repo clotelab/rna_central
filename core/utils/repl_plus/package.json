@@ -6,7 +6,7 @@
   "bin":     "./repl.js",
   "dependencies": {
     "underscore":     "1.7.0",
-    "repl-it":        "1.0.1",
+    "repl-it":        "git://github.com/evansenter/repl-it.git#45d34f68aa7b9f961b79ceab12bf78bc48fe02ce",
     "ansi-highlight": "1.0.2"
   }
 }
