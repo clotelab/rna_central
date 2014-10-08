@@ -6,19 +6,14 @@ block content
       span
     #menu
       .pure-menu.pure-menu-open
-        a.pure-menu-heading(href='#')= title
+        a.pure-menu-heading(href=req.baseUrl)= webserver.for
         ul
-          li.menu-item-divided.pure-menu-selected
-            a(href='#') Home
-          li
-            a(href='#') About
-          li
-            a(href='#') Server
-          li
-            a(href='#') Contact
+          each tab in tabs
+            li(class=(current_tab === tab.title ? "menu-item-divided pure-menu-selected" : ""))
+              a(href=req.baseUrl + tab.path)= tab.title
     #main
       .header
-        h1= title
+        h1= webserver.for
         h2= subtitle || "Webserver"
       .content
         h2.content-subhead How to use this webserver

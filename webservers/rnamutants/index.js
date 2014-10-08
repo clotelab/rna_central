@@ -6,7 +6,12 @@ exports = module.exports = function() {
   var webserver = base_router();
     
   webserver.update_settings(function() {
-    this.webserver_for = "RNAmutants";
+    this.for = "RNAmutants";
+    
+    // this.all("*", function(req, res, next) {
+    //   console.log(req.baseUrl);
+    //   next();
+    // });
   });
     
   return webserver;

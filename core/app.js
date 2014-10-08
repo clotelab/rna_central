@@ -31,7 +31,7 @@ app.get("/stylesheets/font-awesome.min.css", function(req, res) {
     res.sendFile(path.join(__dirname, "..", "node_modules", "font-awesome", "css", "font-awesome.min.css"));
 });
 
-app.use("/", routes());
+// app.use("/", routes());
 
 app.param("webserver", function(req, res, next, webserver) {
   try {
