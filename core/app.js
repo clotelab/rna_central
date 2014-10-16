@@ -6,7 +6,7 @@ var logger        = require("morgan");
 var engines       = require("consolidate");
 var cookie_parser = require("cookie-parser");
 var body_parser   = require("body-parser");
-var debug         = require("debug")("rna_central:core");
+var debug         = require("debug")("rna_central:app");
 var routes        = require("./routes");
 var app           = express();
 
@@ -34,14 +34,12 @@ app.get("/stylesheets/font-awesome.min.css", function(req, res) {
     res.sendFile(path.join(__dirname, "..", "node_modules", "font-awesome", "css", "font-awesome.min.css"));
 });
 
-// app.use("/", routes());
-
 app.param("webserver", function(req, res, next, webserver) {
   try {
     var server    = __.chain(String.prototype.split.call(webserver, "/")).reject(__.isEmpty).first().value();
-    var webserver = require("../webservers/" + server);
+    var webserver = require(path.join(__dirname, "..", "webservers", webserver));
     req.subapp    = webserver();
-    debug("Successfully found the " + server + " webserver");
+    debug("Successfully loaded the " + server + " webserver");
   } catch (error) {
     debug(error.message);
   }
@@ -84,4 +82,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-exports = module.exports = app;
+module.exports = app;

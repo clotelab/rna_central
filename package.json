@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "DEBUG=*-stylus:parser,-stylus:lexer,-stylus:evaluator supervisor ./core/bin/www",
+    "start": "DEBUG=rna_central* supervisor ./core/bin/www",
     "repl": "npm install ./core/utils/repl_plus && repl_plus"
   },
   "dependencies": {

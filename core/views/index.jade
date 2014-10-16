@@ -9,13 +9,12 @@ block content
         a.pure-menu-heading(href=webserver.folder)= webserver.title
         ul
           each tab in webserver.tabs
-            - console.log(tab)
             li(class=(current_tab.title === tab.title ? "menu-item-divided pure-menu-selected" : ""))
               a(href=webserver.folder + __.first(tab.paths).replace(/\/$/, ""))= tab.title
     #main
       .header
         h1= webserver.title
-        h2 Webserver
+        h2= current_tab.title
       .content
         h2.content-subhead How to use this webserver
         p
