@@ -18,11 +18,9 @@ var proto = module.exports = function(options) {
   router.__proto__    = __.extend(express.Router(), proto);
   router.title        = options.title || "Core";
   router.debug        = require("debug")("rna_central:webserver:" + router.title.toLowerCase());
-  // router.form_builder = form_builder();
-  // router.job_runner   = job_runner();
+  router.form_builder = form_builder();
+  router.job_runner   = job_runner();
   router.tabs         = [];
-  
-  // debug(router.form_builder);
 
   /* Wrap all the routing functions so that the routing stack is reorganized after concat-ing to the stack */
   __.each(methods.concat("all"), function(method) {
