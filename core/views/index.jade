@@ -6,15 +6,16 @@ block content
       span
     #menu
       .pure-menu.pure-menu-open
-        a.pure-menu-heading(href=req.baseUrl)= webserver.for
+        a.pure-menu-heading(href=webserver.folder)= webserver.title
         ul
-          each tab in tabs
-            li(class=(current_tab === tab.title ? "menu-item-divided pure-menu-selected" : ""))
-              a(href=req.baseUrl + tab.path)= tab.title
+          each tab in webserver.tabs
+            - console.log(tab)
+            li(class=(current_tab.title === tab.title ? "menu-item-divided pure-menu-selected" : ""))
+              a(href=webserver.folder + __.first(tab.paths).replace(/\/$/, ""))= tab.title
     #main
       .header
-        h1= webserver.for
-        h2= subtitle || "Webserver"
+        h1= webserver.title
+        h2 Webserver
       .content
         h2.content-subhead How to use this webserver
         p
