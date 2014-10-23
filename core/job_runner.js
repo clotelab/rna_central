@@ -1,4 +1,5 @@
-var __ = require("underscore");
+var __    = require("underscore");
+var debug = require("debug")("rna_central:job_runner");
 
 var proto = module.exports = function() {
   var job_runner = {};
@@ -7,3 +8,7 @@ var proto = module.exports = function() {
 
   return job_runner;
 };
+
+__.extend(proto, {
+  debug: debug
+});

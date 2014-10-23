@@ -7,6 +7,7 @@ var engines       = require("consolidate");
 var cookie_parser = require("cookie-parser");
 var body_parser   = require("body-parser");
 var debug         = require("debug")("rna_central:app");
+var warehouse     = require("./warehouse");
 var routes        = require("./routes");
 var app           = express();
 
@@ -23,6 +24,11 @@ app.use(body_parser.urlencoded({ extended: false }));
 app.use(cookie_parser());
 app.use(require("stylus").middleware(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(function(req, res, next) {
+  req.warehouse = warehouse;
+  next();
+})
 
 __.each(["pure-min", "grids-responsive-min", "grids-responsive-old-ie-min"], function(file) {
   app.get("/stylesheets/" + file + ".css", function(req, res) {

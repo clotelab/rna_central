@@ -8,24 +8,23 @@ module.exports = function() {
   
   webserver.form_builder(function(form, fields, validators) {
     return form.create({
-      username: fields.string({ required: true }),
-      password: fields.password({ required: validators.required('You definitely want a password') }),
-      confirm:  fields.password({
-        required: validators.required('don\'t you know your own password?'),
-        validators: [validators.matchField('password')]
-      }),
-      email: fields.email()
+      email: fields.email({ attrs: { placeholder: "email@example.com" } })//,
+      // username: fields.string({ required: true }),
+      // password: fields.password({ required: validators.required('You definitely want a password') }),
+      // confirm:  fields.password({
+      //   required: validators.required('don\'t you know your own password?'),
+      //   validators: [validators.matchField('password')]
+      // })
     });
   });
   
-  debug(webserver.form_builder.generate_html());
-    
   webserver.all("*", function(req, res, next) {
     webserver.debug(req.path);
+    // webserver.debug(res.locals.users);
     next();
-  });  
+  });
   
-  webserver.add_tab("Zombies", "/zombie", "index");
+  // webserver.add_tab("Zombies", "/zombie", "index");
     
   return webserver;
 };
