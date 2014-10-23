@@ -1,6 +1,5 @@
 var __       = require("underscore");
 var debug    = require("debug")("rna_central:warehouse");
-var mongo    = require("mongodb");
 var mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost/rna_central");

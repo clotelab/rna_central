@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-'use strict';
+"use strict";
 
 var __        = require("underscore");
 var fs        = require("fs");
@@ -15,7 +15,7 @@ try {
 }
 
 replit.prototype.loadPackages = __.wrap(replit.prototype.loadPackages, function(loadPackages) {
-  var args = __.toArray(arguments).slice(1)
+  var args = __.toArray(arguments).slice(1);
   args.splice(1, 0, __.difference(args.splice(1, 1)[0], ignoreList));
   
   try {
@@ -25,7 +25,7 @@ replit.prototype.loadPackages = __.wrap(replit.prototype.loadPackages, function(
   }
 });
 
-var repl = exports = module.exports = function() {
+var repl = module.exports = function() {
   global.__   = __;
   global.repl = {
     "ap": function(object) {
@@ -34,7 +34,7 @@ var repl = exports = module.exports = function() {
   };
   
   replit();
-}
+};
 
 if (!module.parent) {
   repl();

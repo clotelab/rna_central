@@ -12,7 +12,7 @@ var proto = module.exports = function(options) {
   /* Default router is a function to handle the request that extends the attributes object */
   function router(req, res, next) {
     router.handle(req, res, next);
-  };
+  }
 
   /* Default router inherits from an Express router through this function */
   router.__proto__ = proto;

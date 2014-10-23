@@ -31,9 +31,9 @@ __.extend(proto, {
   
   pure_field: function(name, object) {
     var label  = object.labelHTML(name);
-    var error  = object.error ? '<div class="alert alert-error">' + object.error + '</div>' : '';
+    var error  = object.error ? "<div class='alert alert-error'>" + object.error + "</div>" : "";
     var widget = object.widget.toHTML(name, object);
-    return '<div class="pure-control-group">' + label + widget + error + '</div>';
+    return "<div class='pure-control-group'>" + label + widget + error + "</div>";
   },
   
   fields: {},

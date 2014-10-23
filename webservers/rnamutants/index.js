@@ -8,7 +8,8 @@ module.exports = function() {
   
   webserver.form_builder(function(form, fields, validators) {
     return form.create({
-      email: fields.email({ attrs: { placeholder: "email@example.com" } })//,
+      email: fields.email({ attrs: { placeholder: "email@example.com" } })
+      //,
       // username: fields.string({ required: true }),
       // password: fields.password({ required: validators.required('You definitely want a password') }),
       // confirm:  fields.password({
@@ -20,6 +21,7 @@ module.exports = function() {
   
   webserver.all("*", function(req, res, next) {
     webserver.debug(req.path);
+    
     // webserver.debug(res.locals.users);
     next();
   });

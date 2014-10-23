@@ -8,7 +8,6 @@ var cookie_parser = require("cookie-parser");
 var body_parser   = require("body-parser");
 var debug         = require("debug")("rna_central:app");
 var warehouse     = require("./warehouse");
-var routes        = require("./routes");
 var app           = express();
 
 // View engine setup
@@ -28,7 +27,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(function(req, res, next) {
   req.warehouse = warehouse;
   next();
-})
+});
 
 __.each(["pure-min", "grids-responsive-min", "grids-responsive-old-ie-min"], function(file) {
   app.get("/stylesheets/" + file + ".css", function(req, res) {
@@ -42,10 +41,10 @@ app.get("/stylesheets/font-awesome.min.css", function(req, res) {
 
 app.param("webserver", function(req, res, next, webserver) {
   try {
-    var server    = __.chain(String.prototype.split.call(webserver, "/")).reject(__.isEmpty).first().value();
-    var webserver = require(path.join(__dirname, "..", "webservers", webserver));
-    req.subapp    = webserver();
-    debug("Successfully loaded the " + server + " webserver");
+    var server_name = __.chain(String.prototype.split.call(webserver, "/")).reject(__.isEmpty).first().value();
+    var load_server = require(path.join(__dirname, "..", "webservers", webserver));
+    req.subapp    = load_server();
+    debug("Successfully loaded the " + server_name + " webserver");
   } catch (error) {
     debug(error.message);
   }
