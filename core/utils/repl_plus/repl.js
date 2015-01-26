@@ -9,8 +9,8 @@ var highlight = require("ansi-highlight");
 
 try {
   var ignoreList = JSON.parse(fs.readFileSync(path.join(__dirname, "ignore.json")));
-} catch (error) {
-  console.log(error);
+} catch (err) {
+  console.log(err);
   process.exit(1);
 }
 

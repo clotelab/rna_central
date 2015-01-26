@@ -7,14 +7,14 @@ var engines       = require("consolidate");
 var cookie_parser = require("cookie-parser");
 var body_parser   = require("body-parser");
 var debug         = require("debug")("rna_central:app");
-var warehouse     = require("./warehouse");
+var warehouse     = require("./warehouse")();
 var app           = express();
 
 // View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 app.engine("jade", engines.jade);
-app.engine("ejs",  engines.ejs);
+app.engine("html", engines.ejs);
 
 // app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use(logger("dev"));
@@ -45,8 +45,8 @@ app.param("webserver", function(req, res, next, webserver) {
     var load_server = require(path.join(__dirname, "..", "webservers", webserver));
     req.subapp    = load_server();
     debug("Successfully loaded the " + server_name + " webserver");
-  } catch (error) {
-    debug(error.message);
+  } catch (err) {
+    debug(err.message);
   }
   
   next();
