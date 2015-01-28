@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var Schema   = mongoose.Schema;
 var validate = require("mongoose-validator");
 
-module.exports = new Schema({
+var RunSchema = module.exports = new Schema({
   nickname: String,
   data: {
     type: Schema.Types.Mixed,

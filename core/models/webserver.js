@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var Schema   = mongoose.Schema;
 var validate = require("mongoose-validator");
 
-module.exports = new Schema({
+var WebserverSchema = module.exports = new Schema({
   name: {
     type: String,
     lowercase: true,
