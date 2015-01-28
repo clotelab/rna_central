@@ -1,7 +1,7 @@
 var __        = require("underscore");
 var BPromise  = require("bluebird");
 var debug     = require("debug")("rna_central:warehouse");
-var mongoose  = require("mongoose");
+var mongoose  = BPromise.promisifyAll(require("mongoose"));
 var models    = require("./models");
 var warehouse = {};
 
@@ -17,12 +17,10 @@ var proto = module.exports = function(options) {
   warehouse.__proto__ = proto;
   proto.__proto__     = mongoose;
   
-  warehouse.connection.on("error", warehouse.db_error);
-  
   if (warehouse.connection.readyState == false) {
+    warehouse.connection.on("error", warehouse.db_error);
     warehouse.connect(warehouse.db_uri);
     models(warehouse);
-    BPromise.promisifyAll(warehouse);
   }
     
   return warehouse;
