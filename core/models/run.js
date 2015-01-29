@@ -9,23 +9,25 @@ var RunSchema = module.exports = new Schema({
   nickname: String,
   data: {
     type: Schema.Types.Mixed,
-    required: true
+    // required: true
   },
   state: {
     type: String,
-    required: true
+    // required: true
   },
   job_id: {
     type: String,
-    required: true
+    // required: true
   },    
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    required: true
   },
   webserver: {
     type: Schema.Types.ObjectId,
-    ref: "Webserver"
+    ref: "Webserver",
+    required: true
   },
   created_at: {
     type: Date,
