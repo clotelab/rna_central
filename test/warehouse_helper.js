@@ -1,13 +1,42 @@
-var __       = require("underscore");
-var BPromise = require("bluebird");
-var sinon    = require("sinon");
+"use strict";
+
+var __               = require("underscore");
+var BPromise         = require("bluebird");
+var sinon            = require("sinon");
+process.env.NODE_ENV = "test";
+
+// beforeEach(function (done) {
+//
+//  function clearDB() {
+//    for (var i in mongoose.connection.collections) {
+//      mongoose.connection.collections[i].remove(function() {});
+//    }
+//    return done();
+//  }
+//
+//  if (mongoose.connection.readyState === 0) {
+//    mongoose.connect(config.db.test, function (err) {
+//      if (err) {
+//        throw err;
+//      }
+//      return clearDB();
+//    });
+//  } else {
+//    return clearDB();
+//  }
+// });
+//
+// afterEach(function (done) {
+//  mongoose.disconnect();
+//  return done();
+// });
 
 var proto = module.exports = function(db_uri) {
   var test_helper = {
     db_uri: db_uri,
     warehouse: require("../core/warehouse.js")({ db_uri: db_uri }),
     clear_db:  BPromise.promisify(require("mocha-mongoose")(db_uri))
-  }
+  };
   
   test_helper.__proto__ = proto;
   
@@ -34,7 +63,7 @@ __.extend(proto, {
       test_helper.clear_db().then(function() {
         BPromise.all(__.map(test_helper.warehouse.models, function(model) {
           return model.findAsync({}).then(function(collection) {
-            collection.should.be.empty;
+            return collection.should.be.empty;
           }).catch(done);
         })).then(function() {
           done();
@@ -46,4 +75,4 @@ __.extend(proto, {
       test_helper.warehouse.connection.db.databaseName.should.equal(__.last(test_helper.db_uri.split("/")));
     });
   }
-})
+});

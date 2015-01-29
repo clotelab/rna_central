@@ -1,5 +1,7 @@
-var express      = require("express");
+"use strict";
+
 var __           = require("underscore");
+var express      = require("express");
 var debug        = require("debug")("rna_central:routes");
 var methods      = require("methods");
 var form_builder = require("./form_builder");

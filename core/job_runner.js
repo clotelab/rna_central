@@ -1,3 +1,5 @@
+"use strict";
+
 var __    = require("underscore");
 var debug = require("debug")("rna_central:job_runner");
 

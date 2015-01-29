@@ -1,3 +1,5 @@
+"use strict";
+
 var __       = require("underscore");
 var mongoose = require("mongoose");
 var Schema   = mongoose.Schema;

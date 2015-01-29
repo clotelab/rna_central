@@ -1,3 +1,5 @@
+"use strict";
+
 var __          = require("underscore");
 var BPromise    = require("bluebird");
 var should      = require("should");

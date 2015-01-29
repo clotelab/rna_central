@@ -9,7 +9,7 @@
   "nonew": true,
   "quotmark": "double",
   "undef": true,
-  "unused": true,
   "proto": true,
-  "node": true
+  "node": true,
+  "mocha": true
 }

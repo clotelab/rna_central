@@ -1,3 +1,5 @@
+"use strict";
+
 var __    = require("underscore");
 var debug = require("debug")("rna_central:form_builder");
 var forms = require("forms");

@@ -1,3 +1,5 @@
+"use strict";
+
 var __          = require("underscore");
 var BPromise    = require("bluebird");
 var should      = require("should");
@@ -16,7 +18,7 @@ describe("Webserver model", function() {
     
     it("can save as active", function(done) {
       new test_helper.warehouse.models.Webserver({ name: "Corgi", active: true }).saveAsync().spread(function(webserver, count) {
-        webserver.active.should.be.true;
+        webserver.active.should.eql(true);
       }).then(done).catch(done);
     });
     
@@ -28,7 +30,7 @@ describe("Webserver model", function() {
     
     it("should be disabled by default", function(done) {
       new test_helper.warehouse.models.Webserver({ name: "Corgi" }).saveAsync().spread(function(webserver, count) {
-        webserver.active.should.be.false;
+        webserver.active.should.eql(false);
       }).then(done).catch(done);
     });
     

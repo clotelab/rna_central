@@ -1,5 +1,7 @@
-var path        = require("path");
+"use strict";
+
 var __          = require("underscore");
+var path        = require("path");
 var base_router = require(path.join(__dirname, "..", "..", "core", "routes"));
 
 module.exports = function() {

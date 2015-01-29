@@ -1,3 +1,5 @@
+"use strict";
+
 var __     = require("underscore");
 var models = "User Run Webserver".split(" ");
 

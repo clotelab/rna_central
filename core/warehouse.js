@@ -1,3 +1,5 @@
+"use strict";
+
 var __        = require("underscore");
 var BPromise  = require("bluebird");
 var debug     = require("debug")("rna_central:warehouse");
@@ -17,7 +19,7 @@ var proto = module.exports = function(options) {
   warehouse.__proto__ = proto;
   proto.__proto__     = mongoose;
   
-  if (warehouse.connection.readyState == false) {
+  if (warehouse.connection.readyState === 0) {
     warehouse.connection.on("error", warehouse.db_error);
     warehouse.connect(warehouse.db_uri);
     models(warehouse);
