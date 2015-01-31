@@ -31,7 +31,7 @@ describe("Webserver model", function() {
     describe("name", function() {
       it("is required", function() {
         return new test_helper.warehouse.models.Webserver({})
-          .saveAsync().should.be.rejected.and.should.eventually.have.deep.property("errors.name.type", "required");
+          .saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.name.type", "required");
       }); 
     
       it("should clean up nicely", function() {
@@ -42,7 +42,7 @@ describe("Webserver model", function() {
       it("should enforce uniqueness", function() {
         return new test_helper.warehouse.models.Webserver({ name: "Corgi" }).saveAsync().then(function() {
           return new test_helper.warehouse.models.Webserver({ name: "Corgi" })
-            .saveAsync().should.be.rejected.and.should.eventually.have.property("code", 11000);
+            .saveAsync().should.eventually.be.rejected.and.have.property("code", 11000);
         });
       });
       

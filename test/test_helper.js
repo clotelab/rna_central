@@ -33,16 +33,8 @@ test_helper.__proto__ = {
   },
   
   ensure_test_db_used: function(test_helper) {
-    afterEach("ensure DB is empty", function(done) {
-      test_helper.clear_db().then(function() {
-        BPromise.all(__.map(test_helper.warehouse.models, function(model) {
-          return model.findAsync({}).then(function(collection) {
-            return collection.should.be.empty;
-          }).catch(done);
-        })).then(function() {
-          done();
-        });
-      });
+    afterEach("clear test DB", function() {
+      return test_helper.clear_db();
     });
     
     it("should connect to the test DB", function() {

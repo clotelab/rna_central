@@ -21,6 +21,13 @@ var proto = module.exports = function(options) {
   
   if (warehouse.connection.readyState === 0) {
     warehouse.connection.on("error", warehouse.db_error);
+    process.on("SIGINT", function() {
+      warehouse.connection.close(function () {
+        console.log("Mongoose disconnected on app termination");
+        process.exit(0);
+      });
+    });
+    
     warehouse.connect(warehouse.db_uri);
     models(warehouse);
   }

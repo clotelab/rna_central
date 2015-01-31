@@ -21,12 +21,12 @@ describe("User model", function() {
     describe("email", function() {
       it("is required", function() {
         return new test_helper.warehouse.models.User({})
-          .saveAsync().should.be.rejected.and.should.eventually.have.deep.property("errors.email.type", "required");
+          .saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.email.type", "required");
       });
     
       it("must be valid", function() {
         return new test_helper.warehouse.models.User({ email: "corgi" })
-          .saveAsync().should.be.rejected.and.should.eventually.have.deep.property("errors.email.message", "corgi is not a valid email address");
+          .saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.email.message", "corgi is not a valid email address");
       });  
     
       it("should clean up nicely", function() {
@@ -37,7 +37,7 @@ describe("User model", function() {
       it("should enforce uniqueness", function() {
         return new test_helper.warehouse.models.User({ email: "test@example.com" }).saveAsync().then(function() {
           return new test_helper.warehouse.models.User({ email: "test@example.com" })
-            .saveAsync().should.be.rejected.and.should.eventually.have.property("code", 11000);
+            .saveAsync().should.eventually.be.rejected.and.have.property("code", 11000);
         });
       });
     });
