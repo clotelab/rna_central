@@ -2,7 +2,7 @@
 
 var __          = require("underscore");
 var path        = require("path");
-var base_router = require(path.join(__dirname, "..", "..", "core", "routes"));
+var base_router = require(path.join(__dirname, "..", "..", "lib", "routes"));
 
 module.exports = function() {
   var webserver = base_router({ title: "RNAmutants" });

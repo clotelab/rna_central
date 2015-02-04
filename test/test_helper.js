@@ -13,8 +13,12 @@ chai.use(chai_promises);
 
 var test_helper = module.exports = {
   db_uri: db_uri,
-  warehouse: require("../core/warehouse.js")({ db_uri: db_uri }),
-  clear_db:  BPromise.promisify(require("mocha-mongoose")(db_uri))
+  warehouse: require("../lib/warehouse.js")({ db_uri: db_uri }),
+  clear_db: function() {
+    __.each(this.warehouse.connection.collections, function(collection) {
+      collection.remove(__.identity);
+    });
+  }
 };
 
 test_helper.__proto__ = {
@@ -33,8 +37,14 @@ test_helper.__proto__ = {
   },
   
   ensure_test_db_used: function(test_helper) {
+    beforeEach("connect to test DB", function() {
+      if (test_helper.warehouse.connection.readyState === 0) {
+        test_helper.warehouse.connect(test_helper.db_uri);
+      }
+    });
+    
     afterEach("clear test DB", function() {
-      return test_helper.clear_db();
+      test_helper.clear_db();
     });
     
     it("should connect to the test DB", function() {
