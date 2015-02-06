@@ -1,0 +1,9 @@
+Job id                    Name             User            Time Use S Queue
+------------------------- ---------------- --------------- -------- - -----
+1095400.portal             PBSscript        jagarcia        1451:47: R low            
+1175641.portal             PBSscript        jagarcia        762:45:2 R low            
+1176910.portal             RNAiFold2.0      apache          00:00:00 C webserver      
+1176911.portal             RNAiFold2.0      apache          00:00:00 C webserver      
+1176912.portal             RNAiFold2.0      apache          00:44:16 R webserver      
+1176913.portal             RNAiFold2.0      apache          00:43:15 R webserver      
+1176914.portal             RNAiFold2.0      apache          00:00:00 C webserver      
