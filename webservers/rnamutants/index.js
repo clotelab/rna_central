@@ -1,6 +1,5 @@
 "use strict";
 
-var __          = require("underscore");
 var path        = require("path");
 var base_router = require(path.join(__dirname, "..", "..", "lib", "routes"));
 

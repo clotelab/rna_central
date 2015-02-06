@@ -1,6 +1,5 @@
 "use strict";
 
-var __          = require("underscore");
 var test_helper = require("../test_helper");
 
 describe("Webserver model", function() {

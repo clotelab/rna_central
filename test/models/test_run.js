@@ -1,6 +1,5 @@
 "use strict";
 
-var __          = require("underscore");
 var BPromise    = require("bluebird");
 var test_helper = require("../test_helper");
 
@@ -20,7 +19,7 @@ describe("Run model", function() {
     
     var build_run = BPromise.promisify(function(config, callback) {
       return with_saved_user_and_webserver().spread(function(user, webserver) {
-        return callback(null, new test_helper.warehouse.models.Run(__.extend({
+        return callback(null, new test_helper.warehouse.models.Run(_.extend({
           user: user,
           webserver: webserver
         }, config)));
@@ -88,7 +87,7 @@ describe("Run model", function() {
     //   });
     //
     //   it("should enforce uniqueness", function() {
-    //     return build_run({ job_id: __.uniqueId().toString() }, function(run) {
+    //     return build_run({ job_id: _.uniqueId().toString() }, function(run) {
     //       return run.save_and_populate().then(function(deep_run) {
     //         return new test_helper.warehouse.models.Run({
     //           user: deep_run.user,

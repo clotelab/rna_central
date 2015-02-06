@@ -1,6 +1,6 @@
 "use strict";
 
-var __            = require("underscore");
+global._          = require("underscore");
 var BPromise      = require("bluebird");
 var sinon         = require("sinon");
 var chai          = require("chai");
@@ -15,15 +15,15 @@ var test_helper = module.exports = {
   db_uri: db_uri,
   warehouse: require("../lib/warehouse.js")({ db_uri: db_uri }),
   clear_db: function() {
-    __.each(this.warehouse.connection.collections, function(collection) {
-      collection.remove(__.identity);
+    _.each(this.warehouse.connection.collections, function(collection) {
+      collection.remove(_.identity);
     });
   }
 };
 
 test_helper.__proto__ = {
   stub_date_for: function(object, key) {
-    var key_name = "_" + Date.now().toString() + key + __.uniqueId().toString();
+    var key_name = "_" + Date.now().toString() + key + _.uniqueId().toString();
     
     before("stub out Date.now", function() {
       this[key_name] = sinon.stub(object, key, function() {
@@ -48,7 +48,7 @@ test_helper.__proto__ = {
     });
     
     it("should connect to the test DB", function() {
-      test_helper.warehouse.connection.db.databaseName.should.equal(__.last(test_helper.db_uri.split("/")));
+      test_helper.warehouse.connection.db.databaseName.should.equal(_.last(test_helper.db_uri.split("/")));
     });
   }
 };

@@ -16,5 +16,8 @@
   "proto": true,
   "quotmark": "double",
   "strict": true,
-  "undef": true
+  "undef": true,
+  "globals": {
+    "_": true
+  }
 }
