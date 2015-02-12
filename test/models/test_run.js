@@ -1,7 +1,7 @@
 "use strict";
 
 var BPromise    = require("bluebird");
-var test_helper = require("../test_helper");
+var test_helper = require("../db_helper");
 
 describe("Run model", function() {
   test_helper.stub_date_for.call(this, test_helper.warehouse.models.Run.schema.paths.created_at, "defaultValue");
@@ -80,24 +80,13 @@ describe("Run model", function() {
       });
     });
     
-    // describe("job_id", function() {
-    //   it("is required", function() {
-    //     return new test_helper.warehouse.models.Run({})
-    //       .saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.job_id.type", "required");
-    //   });
-    //
-    //   it("should enforce uniqueness", function() {
-    //     return build_run({ job_id: _.uniqueId().toString() }, function(run) {
-    //       return run.save_and_populate().then(function(deep_run) {
-    //         return new test_helper.warehouse.models.Run({
-    //           user: deep_run.user,
-    //           webserver: deep_run.webserver,
-    //           job_id: deep_run.job_id
-    //         }).saveAsync().should.eventually.be.rejected.and.have.property("code", 11000);
-    //       });
-    //     });
-    //   });
-    // });
+    describe("job_id", function() {
+      it("is empty by default", function() {
+        return build_run({}).then(function(run) {
+          return run.save_and_populate().tap(console.log).should.eventually.have.deep.property("job_id", "unqueued");
+        });
+      });
+    });
 
     describe("data", function() {
       it("should instantiate unique objects by default", function() {

@@ -1,24 +1,18 @@
 "use strict";
 
 global._          = require("underscore");
-var BPromise      = require("bluebird");
 var sinon         = require("sinon");
 var chai          = require("chai");
 var chai_promises = require("chai-as-promised");
-var db_uri        = "mongodb://localhost/rna_central_test";
+var pbs           = require("../lib/daemons/pbs");
+var daemon        = require("../lib/daemon")("*/10 * * * * *", pbs);
 
 process.env.NODE_ENV = "test";
 chai.should();
 chai.use(chai_promises);
 
 var test_helper = module.exports = {
-  db_uri: db_uri,
-  warehouse: require("../lib/warehouse.js")({ db_uri: db_uri }),
-  clear_db: function() {
-    _.each(this.warehouse.connection.collections, function(collection) {
-      collection.remove(_.identity);
-    });
-  }
+  daemon: daemon
 };
 
 test_helper.__proto__ = {
@@ -33,22 +27,6 @@ test_helper.__proto__ = {
 
     after("restore Date.now", function() {
       this[key_name].restore();
-    });
-  },
-  
-  ensure_test_db_used: function(test_helper) {
-    beforeEach("connect to test DB", function() {
-      if (test_helper.warehouse.connection.readyState === 0) {
-        test_helper.warehouse.connect(test_helper.db_uri);
-      }
-    });
-    
-    afterEach("clear test DB", function() {
-      test_helper.clear_db();
-    });
-    
-    it("should connect to the test DB", function() {
-      test_helper.warehouse.connection.db.databaseName.should.equal(_.last(test_helper.db_uri.split("/")));
     });
   }
 };
