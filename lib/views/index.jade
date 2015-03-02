@@ -10,7 +10,7 @@ block content
         ul
           each tab in webserver.tabs
             li(class=(current_tab.title === tab.title ? "menu-item-divided pure-menu-selected" : ""))
-              a(href=webserver.folder + _.first(tab.paths).replace(/\/$/, ""))= tab.title
+              a(href=webserver.folder + _.first(tab.path).replace(/\/$/, ""))= tab.title
     #main
       .header
         h1= webserver.title
