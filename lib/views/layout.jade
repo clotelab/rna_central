@@ -15,5 +15,15 @@ html
     link(rel="stylesheet", href="/stylesheets/font-awesome.min.css")
     link(rel="stylesheet", href="/stylesheets/style.css")
   body
-    block content
+    #layout
+      a#menuLink.menu-link(href='#menu')
+        span
+      #menu
+        .pure-menu.pure-menu-open
+          a.pure-menu-heading(href=scoped_url())= webserver.title
+          ul
+            each tab in webserver.tabs
+              li(class=(current_tab.title === tab.title ? "menu-item-divided pure-menu-selected" : ""))
+                a(href=scoped_url(_.first(tab.path).replace(/\/$/, "")))= tab.title
+      block content
     script(src="/javascripts/ui.js")

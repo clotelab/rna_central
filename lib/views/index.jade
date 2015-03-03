@@ -1,37 +1,26 @@
 extends layout
 
 block content
-  #layout
-    a#menuLink.menu-link(href='#menu')
-      span
-    #menu
-      .pure-menu.pure-menu-open
-        a.pure-menu-heading(href=webserver.folder)= webserver.title
-        ul
-          each tab in webserver.tabs
-            li(class=(current_tab.title === tab.title ? "menu-item-divided pure-menu-selected" : ""))
-              a(href=webserver.folder + _.first(tab.path).replace(/\/$/, ""))= tab.title
-    #main
-      .header
-        h1= webserver.title
-        h2= current_tab.title
-      .content
-        h2.content-subhead How to use this webserver
-        p
-          | This web server uses the software RNAmutants to compute, for each integer k, the minimum free energy structure MFE(k) and Boltzmann partition function Z(k) over all secondary structures of all k-point mutants of a given RNA sequence. In contrast to exhaustive enumeration, which is only possible for tiny sequences, RNAmutants uses dynamic programming to provide a complete analysis of the mutational landscape for a given RNA sequence.
-        h2.content-subhead Now Let's Speak Some Latin
-        p
-          | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        .pure-g
-          .pure-u-1-4
-            img.pure-img-responsive(src='http://farm3.staticflickr.com/2875/9069037713_1752f5daeb.jpg', alt='Peyto Lake')
-          .pure-u-1-4
-            img.pure-img-responsive(src='http://farm3.staticflickr.com/2813/9069585985_80da8db54f.jpg', alt='Train')
-          .pure-u-1-4
-            img.pure-img-responsive(src='http://farm6.staticflickr.com/5456/9121446012_c1640e42d0.jpg', alt='T-Shirt Store')
-          .pure-u-1-4
-            img.pure-img-responsive(src='http://farm8.staticflickr.com/7357/9086701425_fda3024927.jpg', alt='Mountain')
-        h2.content-subhead Try Resizing your Browser
-        p
-          | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  
+  #main
+    .header
+      h1= webserver.title
+      h2= current_tab.title
+    .content
+      h2.content-subhead How to use this webserver
+      p
+        | This web server uses the software RNAmutants to compute, for each integer k, the minimum free energy structure MFE(k) and Boltzmann partition function Z(k) over all secondary structures of all k-point mutants of a given RNA sequence. In contrast to exhaustive enumeration, which is only possible for tiny sequences, RNAmutants uses dynamic programming to provide a complete analysis of the mutational landscape for a given RNA sequence.
+      h2.content-subhead Now Let's Speak Some Latin
+      p
+        | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      .pure-g
+        .pure-u-1-4
+          img.pure-img-responsive(src='http://farm3.staticflickr.com/2875/9069037713_1752f5daeb.jpg', alt='Peyto Lake')
+        .pure-u-1-4
+          img.pure-img-responsive(src='http://farm3.staticflickr.com/2813/9069585985_80da8db54f.jpg', alt='Train')
+        .pure-u-1-4
+          img.pure-img-responsive(src='http://farm6.staticflickr.com/5456/9121446012_c1640e42d0.jpg', alt='T-Shirt Store')
+        .pure-u-1-4
+          img.pure-img-responsive(src='http://farm8.staticflickr.com/7357/9086701425_fda3024927.jpg', alt='Mountain')
+      h2.content-subhead Try Resizing your Browser
+      p
+        | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

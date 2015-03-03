@@ -1,26 +1,17 @@
 extends layout
 
 block content
-  #layout
-    a#menuLink.menu-link(href='#menu')
-      span
-    #menu
-      .pure-menu.pure-menu-open
-        a.pure-menu-heading(href=webserver.folder)= webserver.title
-        ul
-          each tab in webserver.tabs
-            li(class=(current_tab.title === tab.title ? "menu-item-divided pure-menu-selected" : ""))
-              a(href=webserver.folder + _.first(tab.paths).replace(/\/$/, ""))= tab.title
-    #main
-      .header
-        h1= webserver.title
-        h2= current_tab.title
-      .content
-        h2.content-subhead How to use this webserver
-        p
-          | This web server uses the software RNAmutants to compute, for each integer k, the minimum free energy structure MFE(k) and Boltzmann partition function Z(k) over all secondary structures of all k-point mutants of a given RNA sequence. In contrast to exhaustive enumeration, which is only possible for tiny sequences, RNAmutants uses dynamic programming to provide a complete analysis of the mutational landscape for a given RNA sequence.
-        h2.content-subhead Submit job
-        form.pure-form.pure-form-aligned
-          fieldset
-            != webserver.form_builder.generate_html()
-  
+  #main
+    .header
+      h1= webserver.title
+      h2= current_tab.title
+    .content
+      h2.content-subhead How to use this webserver
+      p
+        | This web server uses the software RNAmutants to compute, for each integer k, the minimum free energy structure MFE(k) and Boltzmann partition function Z(k) over all secondary structures of all k-point mutants of a given RNA sequence. In contrast to exhaustive enumeration, which is only possible for tiny sequences, RNAmutants uses dynamic programming to provide a complete analysis of the mutational landscape for a given RNA sequence.
+      h2.content-subhead Submit job
+      form.pure-form.pure-form-aligned(method="POST" action=(scoped_url("/submit_job")))
+        fieldset
+          != form_builder.generate_html(previous_form || form_builder.form)
+          .pure-controls
+            button.pure-button.pure-button-primary(type="submit") Submit job
