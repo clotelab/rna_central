@@ -9,7 +9,7 @@ var fs          = BPromise.promisifyAll(require("fs"));
 describe("PBS daemon", function() {
   var simple_job = function(string) {
     return _.object(
-      "job_id name user time_use state queue".split(" "), 
+      "queue_id name user time_use state queue".split(" "), 
       string.split(" ")
     );
   };

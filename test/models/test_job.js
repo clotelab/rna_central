@@ -3,8 +3,8 @@
 var BPromise    = require("bluebird");
 var test_helper = require("../db_helper");
 
-describe("Run model", function() {
-  test_helper.stub_date_for.call(this, test_helper.warehouse.models.Run.schema.paths.created_at, "defaultValue");
+describe("Job model", function() {
+  test_helper.stub_date_for.call(this, test_helper.warehouse.models.Job.schema.paths.created_at, "defaultValue");
   
   describe("DB operations", function() {
     test_helper.ensure_test_db_used.call(this, test_helper);
@@ -17,9 +17,9 @@ describe("Run model", function() {
       });
     });
     
-    var build_run = BPromise.promisify(function(config, callback) {
+    var build_job = BPromise.promisify(function(config, callback) {
       return with_saved_user_and_webserver().spread(function(user, webserver) {
-        return callback(null, new test_helper.warehouse.models.Run(_.extend({
+        return callback(null, new test_helper.warehouse.models.Job(_.extend({
           user: user,
           webserver: webserver
         }, config)));
@@ -27,25 +27,25 @@ describe("Run model", function() {
     });
     
     it("should save with valid data", function() {
-      return build_run({}).then(function(run) {
-        return run.saveAsync();
+      return build_job({}).then(function(job) {
+        return job.saveAsync();
       });
     });
 
     it("should populate associations with save_and_populate", function() {
-      return build_run({ nickname: "Chompers" }).then(function(run) {
-        return run.save_and_populate();
-      }).then(function(run) {
-        run.should.have.deep.property("user.email", "test@example.com");
-        run.should.have.deep.property("webserver.name", "Corgi");
-        run.should.have.property("nickname", "Chompers");
+      return build_job({ nickname: "Chompers" }).then(function(job) {
+        return job.save_and_populate();
+      }).then(function(job) {
+        job.should.have.deep.property("user.email", "test@example.com");
+        job.should.have.deep.property("webserver.name", "Corgi");
+        job.should.have.property("nickname", "Chompers");
       });
     });
     
     describe("state", function() {
       it("should be unqueued by default", function() {
-        return build_run({}).then(function(run) {
-          return run.saveAsync().should.eventually.have.deep.property("[0].state", "unqueued");
+        return build_job({}).then(function(job) {
+          return job.saveAsync().should.eventually.have.deep.property("[0].state", "unqueued");
         });
       });
       
@@ -58,7 +58,7 @@ describe("Run model", function() {
               state: state
             };
             
-            return new test_helper.warehouse.models.Run(config)
+            return new test_helper.warehouse.models.Job(config)
               .save_and_populate().should.eventually.have.property("state", state);
           });
         });
@@ -73,17 +73,17 @@ describe("Run model", function() {
               state: state + "o'corgi"
             };
 
-            return new test_helper.warehouse.models.Run(config)
+            return new test_helper.warehouse.models.Job(config)
               .save_and_populate().should.eventually.be.rejected.and.have.deep.property("errors.state.type", "enum");
           });
         });
       });
     });
     
-    describe("job_id", function() {
+    describe("queue_id", function() {
       it("is empty by default", function() {
-        return build_run({}).then(function(run) {
-          return run.save_and_populate().tap(console.log).should.eventually.have.deep.property("job_id", "unqueued");
+        return build_job({}).then(function(job) {
+          return job.save_and_populate().tap(console.log).should.eventually.have.deep.property("queue_id", "unqueued");
         });
       });
     });
@@ -91,14 +91,14 @@ describe("Run model", function() {
     describe("data", function() {
       it("should instantiate unique objects by default", function() {
         return with_saved_user_and_webserver().spread(function(user, webserver) {
-          return new test_helper.warehouse.models.Run({
+          return new test_helper.warehouse.models.Job({
             user: user,
             webserver: webserver
-          }).saveAsync().spread(function(run_1, count) {
-            return new test_helper.warehouse.models.Run({
+          }).saveAsync().spread(function(job_1, count) {
+            return new test_helper.warehouse.models.Job({
               user: user,
               webserver: webserver
-            }).saveAsync().should.eventually.have.deep.property("[0]").and.not.equal(run_1.data);
+            }).saveAsync().should.eventually.have.deep.property("[0]").and.not.equal(job_1.data);
           });
         });
       });
