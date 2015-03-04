@@ -3,16 +3,10 @@ html
   head
     title= title
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="stylesheet", href="/stylesheets/pure-min.css")
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="/stylesheets/grids-responsive-old-ie-min.css">
-    <link rel="stylesheet" href="/stylesheets/side-menu-old-ie.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="/stylesheets/grids-responsive-min.css">
-    <link rel="stylesheet" href="/stylesheets/side-menu.css">
-    <!--<![endif]-->
-    link(rel="stylesheet", href="/stylesheets/font-awesome.min.css")
+    // bower:css
+    link(rel='stylesheet', href='../../bower_components/pure/pure.css')
+    link(rel='stylesheet', href='../../bower_components/font-awesome/css/font-awesome.css')
+    // endbower
     link(rel="stylesheet", href="/stylesheets/style.css")
   body
     #layout
@@ -26,4 +20,6 @@ html
               li(class=(current_tab.title === tab.title ? "menu-item-divided pure-menu-selected" : ""))
                 a(href=scoped_url(_.first(tab.path).replace(/\/$/, "")))= tab.title
       block content
+    // bower:js
+    // endbower
     script(src="/javascripts/ui.js")
