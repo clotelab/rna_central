@@ -1,0 +1,8 @@
+.git/**
+node_modules/**
+*.html
+*.jade
+*.css
+*.styl
+*.json
+*.txt
