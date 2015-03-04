@@ -12,6 +12,6 @@ logs
 results
 
 node_modules
-bower_components
+lib/public/vendor
 npm-debug.log
 covreporter
