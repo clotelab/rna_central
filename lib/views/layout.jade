@@ -25,5 +25,6 @@ html
             each tab in webserver.tabs
               li.pure-menu-item(class=(current_tab.title === tab.title ? "pure-menu-selected" : ""))
                 a.pure-menu-link(href=scoped_url(_.first(tab.path).replace(/\/$/, "")))= tab.title
+      = flash("warn")
       block content
     script(src="/javascripts/ui.js")
