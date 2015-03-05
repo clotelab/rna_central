@@ -1,9 +1,9 @@
 "use strict";
 
 var path        = require("path");
-var base_router = require(path.join(__dirname, "../../lib/routes"));
+var base_router = require(path.join(__dirname, "../../lib/subapp"));
 var webserver   = module.exports = base_router({ 
-  // This is cookie cutter config. Having a hook to the module object allows us to handle things like paths correctly in lib/routes
+  // This is cookie cutter config. Having a hook to the module object allows us to handle things like paths correctly in lib/subapp
   module: module,
   // The title is the pretty name for the webserver. It is used for the UI across the webserver instance.
   title: "RNAmutants",
