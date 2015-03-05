@@ -1,4 +1,8 @@
 [
   "font-awesome",
-  "purecss"
+  "purecss",
+  "grunt-contrib-jshint",
+  "grunt-contrib-watch",
+  "grunt-mocha-test",
+  "grunt-shell"
 ]
