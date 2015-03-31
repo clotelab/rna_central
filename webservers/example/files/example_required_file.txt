@@ -1,0 +1,1 @@
+This is an example required file, that is listed in the manifest for this webserver. When a job is created, this file will be *copied* into the job workspace.
