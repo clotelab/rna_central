@@ -11,7 +11,7 @@ describe("Job model", function() {
     
     var with_saved_user_and_webserver = BPromise.promisify(function(callback) {
       return new test_helper.warehouse.models.User({ email: "test@example.com" }).saveAsync().spread(function(user, count) {
-        return new test_helper.warehouse.models.Webserver({ name: "Corgi" }).saveAsync().spread(function(webserver, count) {
+        return new test_helper.warehouse.models.Webserver({ name: "Corgi", folder: "corgi" }).saveAsync().spread(function(webserver, count) {
           return callback(null, user, webserver);
         });
       });

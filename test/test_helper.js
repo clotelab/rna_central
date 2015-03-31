@@ -1,6 +1,7 @@
 "use strict";
 
 global._          = require("underscore");
+global.basedir    = process.cwd();
 var sinon         = require("sinon");
 var chai          = require("chai");
 var chai_promises = require("chai-as-promised");
