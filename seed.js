@@ -20,7 +20,9 @@ var webserver_promise = warehouse.models.Webserver.remove().execAsync().then(fun
   });
 });
 
-BPromise.all([user_promise, webserver_promise])
+var job_promise = warehouse.models.Job.remove().execAsync();
+
+BPromise.all([user_promise, webserver_promise, job_promise])
   .then(function() {
     return warehouse.models.User.findOneAsync({ email: "evansenter@gmail.com" }).then(function(user) {
       return warehouse.models.Webserver.findOneAsync({ name: "Corgi" }).then(function(webserver) {
