@@ -1,7 +1,7 @@
 "use strict";
 
 var path        = require("path");
-var base_router = require(path.join(__dirname, "../../lib/subapp"));
+var base_router = require(path.join(basedir, "lib/subapp"));
 var webserver   = module.exports = base_router({ 
   // This is cookie cutter config. Having a hook to the module object allows us to handle things like paths correctly in lib/subapp
   module: module,
@@ -14,6 +14,14 @@ var webserver   = module.exports = base_router({
     { title: "Server", path: "/submit_job", template: "server", meta: "form" },
     { title: "Extra", path: "/extra", template: "index" },
     { title: "Another", path: ["/about", "/about2"], template: "./views/about" }
+  ], 
+  
+  // ensure file_manifest.all.startWith("./") and !file_manifest.any.include("/../")
+  // Forces all paths to be relative to the current directory, so the system doesn't become insanely coupled and dependent on its
+  // current location in the file system.
+  
+  file_manifest: [
+    
   ]
 });
 
