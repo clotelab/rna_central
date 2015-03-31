@@ -5,7 +5,7 @@ global.ap      = _.compose(console.log.bind(console), require("prettyjson").rend
 global.basedir = __dirname;
 var BPromise   = require("bluebird");
 var pbs        = require("./lib/daemons/pbs");
-var daemon     = require("./lib/daemon")(false, pbs);
+var daemon     = require("./lib/daemon")(pbs);
 var warehouse  = require("./lib/warehouse")({});
 
 var user_promise = warehouse.models.User.remove().execAsync().then(function() {

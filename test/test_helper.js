@@ -5,7 +5,7 @@ var sinon         = require("sinon");
 var chai          = require("chai");
 var chai_promises = require("chai-as-promised");
 var pbs           = require("../lib/daemons/pbs");
-var daemon        = require("../lib/daemon")("*/10 * * * * *", pbs);
+var daemon        = require("../lib/daemon")(pbs);
 
 process.env.NODE_ENV = "test";
 chai.should();
