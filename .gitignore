@@ -15,3 +15,5 @@ node_modules
 lib/public/vendor
 npm-debug.log
 covreporter
+
+rna.ps
