@@ -41,21 +41,17 @@ webserver.form_builder(function(fields, validators, widgets) {
   };
 });
 
-webserver.form_validator(function(form, flash) {
-  flash("Shit is fucked.");
+webserver.form_validator(function(form_data) {
+  webserver.debug(form_data);
+  return true;
 });
 
-// webserver.generate_command(function() {
-//
-// });
-//
-// webserver.finish_job(function() {
-//
-// });
+webserver.pbs_command(function() {
+  return "echo GGGGGCCCCC | RNAfold";
+});
 
-webserver.all("*", function(req, res, next) {
-  webserver.debug(req.path);
-  next();
+webserver.finish_job(function() {
+
 });
   
 return webserver;

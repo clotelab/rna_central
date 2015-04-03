@@ -20,7 +20,7 @@ describe("User model", function() {
     describe("email", function() {
       it("is required", function() {
         return new test_helper.warehouse.models.User({})
-          .saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.email.type", "required");
+          .saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.email.kind", "required");
       });
     
       it("must be valid", function() {
