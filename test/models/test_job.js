@@ -1,12 +1,12 @@
 "use strict";
 
 var express     = require("express");
-var BPromise    = require("bluebird");
+var bluebird    = require("bluebird");
 var test_helper = require("../db_helper");
 var sinon       = require("sinon");
 
 describe("Job model", function() {
-	var Job = test_helper.warehouse.models.Job;
+	var Job = test_helper.warehouse.Job;
 
   before(function() {
   	sinon.stub(test_helper.daemon.queue, "submit_jobAsync", function() {
@@ -42,7 +42,7 @@ describe("Job model", function() {
       });
       
       it("should be valid only with acceptable enum string", function() {
-        return BPromise.map("unqueued queued running complete notified error".split(" "), function(state) {
+        return bluebird.map("unqueued queued running complete notified error".split(" "), function(state) {
           return new Job({
           	email: "evansenter@gmail.com", 
           	webserver_name: "example",
@@ -52,7 +52,7 @@ describe("Job model", function() {
       });
       
       it("should be invalid with anything else", function() {
-      	return BPromise.map("unqueued queued running complete notified error".split(" "), function(state) {
+      	return bluebird.map("unqueued queued running complete notified error".split(" "), function(state) {
           return new Job({
           	email: "evansenter@gmail.com", 
           	webserver_name: "example",

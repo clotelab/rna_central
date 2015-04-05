@@ -29,7 +29,6 @@
     "jade": "^1.9.2",
     "methods": "^1.1.1",
     "mongoose": "^4.0.1",
-    "mongoose-deep-populate": "1.0.2",
     "mongoose-validator": "^1.0.3",
     "morgan": "^1.5.2",
     "mustache": "^2.0.0",

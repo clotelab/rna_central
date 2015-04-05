@@ -1,6 +1,7 @@
 [
   "font-awesome",
   "purecss",
+  "halogen",
   "grunt-contrib-jshint",
   "grunt-contrib-watch",
   "grunt-mocha-test",
