@@ -1,107 +1,112 @@
 "use strict";
 
+var express     = require("express");
 var BPromise    = require("bluebird");
 var test_helper = require("../db_helper");
+var sinon       = require("sinon");
 
-// describe("Job model", function() {
-//   test_helper.stub_date_for.call(this, test_helper.warehouse.models.Job.schema.paths.created_at, "defaultValue");
+describe("Job model", function() {
+	var Job = test_helper.warehouse.models.Job;
+
+  before(function() {
+  	sinon.stub(test_helper.daemon.queue, "submit_jobAsync", function() {
+  		return { spread: _.identity };
+  	});
+
+  	sinon.stub(Job.schema.paths.created_at, "defaultValue", function() {
+  		return new Date(0);
+  	});
+  });
+
+  after(function() {
+  	test_helper.daemon.queue.submit_jobAsync.restore();
+  	Job.schema.paths.created_at.defaultValue.restore();
+  });
   
-//   describe("DB operations", function() {
-//     test_helper.ensure_test_db_used.call(this, test_helper);
-    
-//     var with_saved_user_and_webserver = BPromise.promisify(function(callback) {
-//       return new test_helper.warehouse.models.User({ email: "test@example.com" }).saveAsync().spread(function(user, count) {
-//         return new test_helper.warehouse.models.Webserver({ name: "Corgi", folder: "corgi" }).saveAsync().spread(function(webserver, count) {
-//           return callback(null, user, webserver);
-//         });
-//       });
-//     });
-    
-//     var build_job = BPromise.promisify(function(config, callback) {
-//       return with_saved_user_and_webserver().spread(function(user, webserver) {
-//         return callback(null, new test_helper.warehouse.models.Job(_.extend({
-//           user: user,
-//           webserver: webserver
-//         }, config)));
-//       });
-//     });
-    
-//     it("should save with valid data", function() {
-//       return build_job({}).then(function(job) {
-//         return job.saveAsync();
-//       });
-//     });
+  describe("database operations", function() {
+  	var job;
 
-//     it("should populate associations with save_and_populate", function() {
-//       return build_job({ nickname: "Chompers" }).then(function(job) {
-//         return job.save_and_populate();
-//       }).then(function(job) {
-//         job.should.have.deep.property("user.email", "test@example.com");
-//         job.should.have.deep.property("webserver.name", "Corgi");
-//         job.should.have.property("nickname", "Chompers");
-//       });
-//     });
+  	beforeEach(function() {
+  		job = new Job({ email: "evansenter@gmail.com", webserver_name: "example" });
+  	});
+
+    test_helper.ensure_test_db_used.call(this, test_helper);
     
-//     describe("state", function() {
-//       it("should be unqueued by default", function() {
-//         return build_job({}).then(function(job) {
-//           return job.saveAsync().should.eventually.have.deep.property("[0].state", "unqueued");
-//         });
-//       });
+    it("should save with valid data", function() {
+    	return job.save();
+    });
+    
+    describe("state", function() {
+      it("should be unqueued by default", function() {
+        return job.saveAsync().should.eventually.have.deep.property("[0].state", "unqueued");
+      });
       
-//       it("should be valid only with acceptable enum string", function() {
-//         return with_saved_user_and_webserver().spread(function(user, webserver) {
-//           return BPromise.map("unqueued queued running complete error".split(" "), function(state) {
-//             var config = {
-//               user: user,
-//               webserver: webserver,
-//               state: state
-//             };
-            
-//             return new test_helper.warehouse.models.Job(config)
-//               .save_and_populate().should.eventually.have.property("state", state);
-//           });
-//         });
-//       });
+      it("should be valid only with acceptable enum string", function() {
+        return BPromise.map("unqueued queued running complete notified error".split(" "), function(state) {
+          return new Job({
+          	email: "evansenter@gmail.com", 
+          	webserver_name: "example",
+          	state: state
+          }).save();
+        });
+      });
       
-//       it("should be invalid with anything else", function() {
-//         return with_saved_user_and_webserver().spread(function(user, webserver) {
-//           return BPromise.map("unqueued queued running complete error".split(" "), function(state) {
-//             var config = {
-//               user: user,
-//               webserver: webserver,
-//               state: state + "o'corgi"
-//             };
-
-//             return new test_helper.warehouse.models.Job(config)
-//               .save_and_populate().should.eventually.be.rejected.and.have.deep.property("errors.state.type", "enum");
-//           });
-//         });
-//       });
-//     });
+      it("should be invalid with anything else", function() {
+      	return BPromise.map("unqueued queued running complete notified error".split(" "), function(state) {
+          return new Job({
+          	email: "evansenter@gmail.com", 
+          	webserver_name: "example",
+          	state: state + "o'corgi"
+          }).saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.state.kind", "enum");
+        });
+      });
+    });
     
-//     describe("queue_id", function() {
-//       it("is empty by default", function() {
-//         return build_job({}).then(function(job) {
-//           return job.save_and_populate().tap(console.log).should.eventually.have.deep.property("queue_id", "unqueued");
-//         });
-//       });
-//     });
+    describe("queue_id", function() {
+      it("is empty by default", function() {
+        return job.saveAsync().should.eventually.have.deep.property("[0].queue_id").be.undefined;
+      });
+    });
 
-//     describe("data", function() {
-//       it("should instantiate unique objects by default", function() {
-//         return with_saved_user_and_webserver().spread(function(user, webserver) {
-//           return new test_helper.warehouse.models.Job({
-//             user: user,
-//             webserver: webserver
-//           }).saveAsync().spread(function(job_1, count) {
-//             return new test_helper.warehouse.models.Job({
-//               user: user,
-//               webserver: webserver
-//             }).saveAsync().should.eventually.have.deep.property("[0]").and.not.equal(job_1.data);
-//           });
-//         });
-//       });
-//     });
-//   });
-// });
+    describe("email", function() {
+      it("is required", function() {
+      	job.email = undefined;
+        return job.saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.email.kind", "required");
+      });
+    
+      it("must be valid", function() {
+      	job.email = "corgi";
+        return job.saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.email.message", "corgi is not a valid email address");
+      });  
+    
+      it("should clean up nicely", function() {
+      	job.email = " TEST@EXAMPLE.COM ";
+        return job.saveAsync().should.eventually.have.deep.property("[0].email", "test@example.com");
+      });
+    });
+
+    describe("webserver_name", function() {
+      it("is required", function() {
+      	job.webserver_name = undefined;
+        return job.saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.webserver_name.kind", "required");
+      }); 
+    
+      it("should clean up nicely", function() {
+				job.webserver_name = " example ";
+				return job.saveAsync().should.eventually.have.deep.property("[0].webserver_name", "example");
+      });
+    });
+
+    describe("virtual webserver attribute", function() {
+      it("should return the webserver corresponding to the webserver_name", function() {
+        return job.saveAsync().should.eventually.have.deep.property("[0].webserver.constructor", express.Router);
+      });
+
+      it("should support generate_command", function() {
+        return job.saveAsync().spread(function(job) {
+          return job.webserver.generate_command().should.equal("echo GGGGGCCCCC | RNAfold");
+        });
+      });
+    });
+  });
+});
