@@ -1,10 +1,10 @@
 "use strict";
 
-var BPromise    = require("bluebird");
+var bluebird    = require("bluebird");
 var test_helper = require("../test_helper");
 var pbs         = require("../../lib/daemons/pbs");
 var path        = require("path");
-var fs          = BPromise.promisifyAll(require("fs"));
+var fs          = bluebird.promisifyAll(require("fs"));
 
 describe("PBS daemon", function() {
   var simple_job = function(string) {
