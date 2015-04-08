@@ -61,6 +61,27 @@ describe("Job model", function() {
         });
       });
     });
+
+    describe("nickname", function() {
+      beforeEach(function() {
+        sinon.stub(test_helper.warehouse.Job.schema.statics, "haikunate", function() {
+          return "stubbed-haikunate-1234";
+        });
+      });
+
+      afterEach(function() {
+        test_helper.warehouse.Job.schema.statics.haikunate.restore();
+      });
+
+      it("is assigned a random string if not provided", function() {
+        return job.saveAsync().should.eventually.have.deep.property("[0].nickname", "stubbed-haikunate-1234");
+      });
+
+      it("keeps the provided nickname if present", function() {
+        job.nickname = "Corgi";
+        return job.saveAsync().should.eventually.have.deep.property("[0].nickname", "Corgi");
+      });
+    });
     
     describe("queue_id", function() {
       it("is empty by default", function() {
