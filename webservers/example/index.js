@@ -9,6 +9,10 @@ var webserver   = module.exports = base_router({
   // The title is the pretty name for the webserver. It is used for the UI across the webserver instance.
   title: "RNAmutants",
 
+  // The webserver is completely inaccessible until the active: true flag is set. It's possible that the cache needs to get busted
+  // on this if changing the flag seems to have no effect, since require() calls are cached.
+  active: true,
+
   // The tabs option supports the following keys: "default", "none", or an array of tab objects having keys [title, path, template].
   // The title key is the pretty name for the tab, the path string / array are the subpaths that point to this tab and the template
   // key is a path that points to the HTML file for the tab. Files are looked up relative to the current directory, or in lib/views
