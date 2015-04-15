@@ -8,18 +8,18 @@ var sinon       = require("sinon");
 describe("Job model", function() {
 	var Job = test_helper.warehouse.Job;
 
-  before(function() {
-  	sinon.stub(test_helper.daemon.queue, "submit_jobAsync", function() {
-  		return { spread: _.identity };
-  	});
+  var stub_save_hooks = function(job) {
+    sinon.stub(job, "submit");
+    return job;
+  };
 
+  before(function() {
   	sinon.stub(Job.schema.paths.created_at, "defaultValue", function() {
   		return new Date(0);
   	});
   });
 
   after(function() {
-  	test_helper.daemon.queue.submit_jobAsync.restore();
   	Job.schema.paths.created_at.defaultValue.restore();
   });
   
@@ -28,6 +28,7 @@ describe("Job model", function() {
 
   	beforeEach(function() {
   		job = new Job({ email: "evansenter@gmail.com", webserver_name: "example" });
+      stub_save_hooks(job);
   	});
 
     test_helper.ensure_test_db_used.call(this, test_helper);
@@ -43,21 +44,21 @@ describe("Job model", function() {
       
       it("should be valid only with acceptable enum string", function() {
         return bluebird.map("unqueued queued running complete notified error".split(" "), function(state) {
-          return new Job({
-          	email: "evansenter@gmail.com", 
-          	webserver_name: "example",
-          	state: state
-          }).save();
+          return stub_save_hooks(new Job({
+            email: "evansenter@gmail.com", 
+            webserver_name: "example",
+            state: state
+          })).save();
         });
       });
       
       it("should be invalid with anything else", function() {
       	return bluebird.map("unqueued queued running complete notified error".split(" "), function(state) {
-          return new Job({
-          	email: "evansenter@gmail.com", 
-          	webserver_name: "example",
-          	state: state + "o'corgi"
-          }).saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.state.kind", "enum");
+          return stub_save_hooks(new Job({
+            email: "evansenter@gmail.com", 
+            webserver_name: "example",
+            state: state + "o'corgi"
+          })).saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.state.kind", "enum");
         });
       });
     });
