@@ -3,17 +3,17 @@ html
   head
     title= title
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel='stylesheet', href="/vendor/pure/pure.css")
-    link(rel='stylesheet', href="/vendor/font-awesome/css/font-awesome.css")
+    link(rel='stylesheet', href=public_url("/vendor/pure/pure.css"))
+    link(rel='stylesheet', href=public_url("/vendor/font-awesome/css/font-awesome.css"))
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-    <link rel="stylesheet" href="/stylesheets/side-menu-old-ie.css">
+    <link rel="stylesheet" href=!{public_url("http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css")}>
+    <link rel="stylesheet" href=!{public_url("/stylesheets/side-menu-old-ie.css")}>
     <![endif]-->
     <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    <link rel="stylesheet" href="/stylesheets/side-menu.css">
+    <link rel="stylesheet" href=!{public_url("http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css")}>
+    <link rel="stylesheet" href=!{public_url("/stylesheets/side-menu.css")}>
     <!--<![endif]-->
-    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href=public_url("/stylesheets/style.css"))
   body
     #layout
       a#menuLink.menu-link(href='#menu')
