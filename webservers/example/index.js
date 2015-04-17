@@ -35,12 +35,14 @@ webserver.form_builder(function(fields, validators, widgets) {
     email: fields.email({ 
       required: true,
       cssClasses: { field: ["pure-control-group"] },
-      widget: widgets.text({ placeholder: "email@example.com", required: "true" } )
+      widget: widgets.text({ placeholder: "email@example.com", required: "true" }),
+      value: "email@example.com"
     }),
     rna_sequence: fields.string({
       required: true,
       cssClasses: { field: ["pure-control-group"] },
-      widget: widgets.text({ placeholder: "GGGGCCCCAAAAUAUA", required: "true" } )
+      widget: widgets.text({ placeholder: "GGGGGCCCCC", required: "true" }),
+      value: "GGGGGCCCCC"
     })
   };
 });
