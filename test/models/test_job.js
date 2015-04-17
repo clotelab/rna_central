@@ -34,7 +34,7 @@ describe("Job model", function() {
     test_helper.ensure_test_db_used.call(this, test_helper);
     
     it("should save with valid data", function() {
-    	return job.save();
+      return job.save();
     });
     
     describe("state", function() {
