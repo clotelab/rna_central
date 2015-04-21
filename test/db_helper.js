@@ -2,12 +2,18 @@
 
 var test_helper = require("./test_helper");
 var db_uri      = "mongodb://localhost/rna_central_test";
+var warehouse   = require("../lib/warehouse")({ db_uri: db_uri });
+var pbs         = require("../lib/daemons/pbs");
+var daemon      = require("../lib/daemon")(warehouse, pbs);
 module.exports  = test_helper;
+
 
 _.extend(test_helper, {
   db_uri: db_uri,
 
-  warehouse: require("../lib/warehouse.js")({ db_uri: db_uri }),
+  warehouse: warehouse,
+
+  daemon: daemon,
 
   clear_db: function() {
     _.each(this.warehouse.connection.collections, function(collection) {
@@ -23,11 +29,11 @@ _.extend(test_helper.__proto__, {
         test_helper.warehouse.connect(test_helper.db_uri);
       }
     });
-  
+
     afterEach("clear test DB", function() {
       test_helper.clear_db();
     });
-  
+
     it("should connect to the test DB", function() {
       test_helper.warehouse.connection.db.databaseName.should.equal(_.last(test_helper.db_uri.split("/")));
     });

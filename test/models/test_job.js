@@ -130,5 +130,15 @@ describe("Job model", function() {
         });
       });
     });
+
+    describe("update_by_queue_id", function() {
+      it("should call the update hook", function() {
+        job.queue_id = "corgi";
+
+        return job.saveAsync().spread(function(job) {
+          return Job.update_by_queue_id(job.queue_id, "running").should.eventually.have.property("state", "running");
+        });
+      });
+    });
   });
 });

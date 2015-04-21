@@ -2,7 +2,7 @@
 
 var path        = require("path");
 var base_router = require(path.join(basedir, "lib/subapp"));
-var webserver   = module.exports = base_router({ 
+var webserver   = module.exports = base_router({
   // This is cookie cutter config. Having a hook to the module object allows us to handle things like paths correctly in lib/subapp
   module: module,
 
@@ -20,8 +20,8 @@ var webserver   = module.exports = base_router({
     { title: "Server", path: "/submit_job", template: "server", meta: "form" },
     { title: "Extra", path: "/extra", template: "index" },
     { title: "Another", path: ["/about", "/about2"], template: "./views/about" }
-  ], 
-  
+  ],
+
   // The list of files that will be copied to the workspace for the currently running job. If you use relative paths outside the
   // scope of this folder YOU ARE GOING TO HAVE A BAD TIME. Keep all dependencies within this folder, so the file system doesn't
   // become cripplingly coupled to the framework's location.
@@ -30,9 +30,14 @@ var webserver   = module.exports = base_router({
   ]
 });
 
+webserver.all("*", function(req, res, next) {
+  webserver.debug(req.session);
+  next();
+});
+
 webserver.form_builder(function(fields, validators, widgets) {
   return {
-    email: fields.email({ 
+    email: fields.email({
       required: true,
       cssClasses: { field: ["pure-control-group"] },
       widget: widgets.text({ placeholder: "email@example.com", required: "true" }),
@@ -59,5 +64,5 @@ webserver.pbs_command(function() {
 webserver.finish_job(function() {
 
 });
-  
+
 return webserver;
