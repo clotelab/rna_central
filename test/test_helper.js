@@ -1,11 +1,13 @@
 "use strict";
 
-global._          = require("underscore");
-global.basedir    = process.cwd();
-var chai          = require("chai");
-var chai_promises = require("chai-as-promised");
+var path                    = require("path");
+global._                    = require("underscore");
+global.basedir              = process.cwd();
+process.env.NODE_CONFIG_DIR = path.join(process.cwd(), "config");
+process.env.NODE_ENV        = "test";
+var chai                    = require("chai");
+var chai_promises           = require("chai-as-promised");
 
-process.env.NODE_ENV = "test";
 chai.should();
 chai.use(chai_promises);
 

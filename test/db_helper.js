@@ -1,7 +1,8 @@
 "use strict";
 
 var test_helper = require("./test_helper");
-var db_uri      = "mongodb://localhost/rna_central_test";
+var config      = require("config");
+var db_uri      = config.get("db_uri");
 var warehouse   = require("../lib/warehouse")({ db_uri: db_uri });
 var pbs         = require("../lib/daemons/pbs");
 var daemon      = require("../lib/daemon")(warehouse, pbs);

@@ -1,0 +1,5 @@
+{
+	"base_prefix": "",
+	"db_uri": "mongodb://localhost/rna_central",
+	"port": "3000"
+}
