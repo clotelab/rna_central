@@ -63,7 +63,7 @@ describe("Job model", function() {
       });
     });
 
-    describe("nickname", function() {
+    describe("with stubbed nickname", function() {
       beforeEach(function() {
         sinon.stub(test_helper.warehouse.Job.schema.statics, "haikunate", function() {
           return "stubbed-haikunate-1234";
@@ -78,9 +78,24 @@ describe("Job model", function() {
         return job.saveAsync().should.eventually.have.deep.property("[0].nickname", "stubbed-haikunate-1234");
       });
 
-      it("keeps the provided nickname if present", function() {
+      it("overrides any user-provided name", function() {
         job.nickname = "Corgi";
-        return job.saveAsync().should.eventually.have.deep.property("[0].nickname", "Corgi");
+        return job.saveAsync().should.eventually.have.deep.property("[0].nickname", "stubbed-haikunate-1234");
+      });
+
+      describe("virtual workspace_path attribute", function() {
+        it("should return the path to the workspace for the job", function() {
+          return job.saveAsync()
+            .should.eventually.have.deep.property("[0].workspace_path").and.match(/example\/stubbed-haikunate-1234$/);
+        });
+      });
+
+      describe("virtual job_workspace_file attribute", function() {
+        it("should return the path to the file requested, having prefix equal to the job nickname", function() {
+          return job.saveAsync().spread(function(job) {
+            return job.workspace_file(".sh").should.match(/example\/stubbed-haikunate-1234\/stubbed-haikunate-1234.sh$/);
+          });
+        });
       });
     });
 
