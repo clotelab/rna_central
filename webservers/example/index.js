@@ -1,6 +1,7 @@
 "use strict";
 
 var path        = require("path");
+var util        = require("util");
 var base_router = require(path.join(basedir, "lib/subapp"));
 var webserver   = module.exports = base_router({
   // This is cookie cutter config. Having a hook to the module object allows us to handle things like paths correctly in lib/subapp
@@ -31,17 +32,14 @@ var webserver   = module.exports = base_router({
 });
 
 webserver.all("*", function(req, res, next) {
-  webserver.debug(req.session);
   next();
 });
 
 webserver.form_builder(function(fields, validators, widgets) {
   return {
     email: fields.email({
-      required: true,
       cssClasses: { field: ["pure-control-group"] },
-      widget: widgets.text({ placeholder: "email@example.com", required: "true" }),
-      value: "email@example.com"
+      widget: widgets.text({ placeholder: "email@example.com" })
     }),
     rna_sequence: fields.string({
       required: true,
@@ -52,13 +50,18 @@ webserver.form_builder(function(fields, validators, widgets) {
   };
 });
 
-webserver.form_validator(function(form_data) {
+webserver.form_validator(function(form_data, check) {
+  webserver.debug("Validating the following job submitted on " + webserver.id);
   webserver.debug(form_data);
-  return true;
+
+  return check.is_rna(form_data.rna_sequence);
 });
 
-webserver.pbs_command(function() {
-  return "echo GGGGGCCCCC | RNAfold";
+webserver.pbs_command(function(job_data) {
+  webserver.debug("Generating PBS script for the following job submitted on " + webserver.id);
+  webserver.debug(job_data);
+
+  return util.format("echo %s | RNAfold", job_data.rna_sequence);
 });
 
 webserver.finish_job(function() {
