@@ -31,36 +31,36 @@ var webserver   = module.exports = base_router({
   ]
 });
 
-webserver.all("*", function(req, res, next) {
-  next();
-});
-
 webserver.form_builder(function(fields, validators, widgets) {
   return {
-    email: fields.email({
+    email: fields.string({
       cssClasses: { field: ["pure-control-group"] },
       widget: widgets.text({ placeholder: "email@example.com" })
     }),
     rna_sequence: fields.string({
-      required: true,
       cssClasses: { field: ["pure-control-group"] },
-      widget: widgets.text({ placeholder: "GGGGGCCCCC", required: "true" }),
-      value: "GGGGGCCCCC"
+      widget: widgets.text({ placeholder: "GGGGGCCCCC" })
     })
   };
 });
 
-webserver.form_validator(function(form_data, check) {
-  webserver.debug("Validating the following job submitted on " + webserver.id);
-  webserver.debug(form_data);
+webserver.form_validator(function(form_data, validator) {
+  return validator(function(check) {
+    // "this" is the form itself, so you can flag it as invalid simply by making this.error_count !== 0
 
-  return check.is_rna(form_data.rna_sequence);
+    check.isEmail({
+      key: "email",
+      message: "The email address is invalid"
+    });
+
+    check.is_rna({
+      key: "rna_sequence",
+      message: "The RNA sequence {{value}} is invalid"
+    });
+  });
 });
 
 webserver.pbs_command(function(job_data) {
-  webserver.debug("Generating PBS script for the following job submitted on " + webserver.id);
-  webserver.debug(job_data);
-
   return util.format("echo %s | RNAfold", job_data.rna_sequence);
 });
 
