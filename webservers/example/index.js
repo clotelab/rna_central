@@ -1,6 +1,7 @@
 "use strict";
 
 var path        = require("path");
+var util        = require("util");
 var base_router = require(path.join(basedir, "lib/subapp"));
 var webserver   = module.exports = base_router({
   // This is cookie cutter config. Having a hook to the module object allows us to handle things like paths correctly in lib/subapp
@@ -30,35 +31,37 @@ var webserver   = module.exports = base_router({
   ]
 });
 
-webserver.all("*", function(req, res, next) {
-  webserver.debug(req.session);
-  next();
-});
-
 webserver.form_builder(function(fields, validators, widgets) {
   return {
-    email: fields.email({
-      required: true,
+    email: fields.string({
       cssClasses: { field: ["pure-control-group"] },
-      widget: widgets.text({ placeholder: "email@example.com", required: "true" }),
-      value: "email@example.com"
+      widget: widgets.text({ placeholder: "email@example.com" })
     }),
     rna_sequence: fields.string({
-      required: true,
       cssClasses: { field: ["pure-control-group"] },
-      widget: widgets.text({ placeholder: "GGGGGCCCCC", required: "true" }),
-      value: "GGGGGCCCCC"
+      widget: widgets.text({ placeholder: "GGGGGCCCCC" })
     })
   };
 });
 
-webserver.form_validator(function(form_data) {
-  webserver.debug(form_data);
-  return true;
+webserver.form_validator(function(form_data, validator) {
+  return validator(function(check) {
+    // "this" is the form itself, so you can flag it as invalid simply by making this.error_count !== 0
+
+    check.isEmail({
+      key: "email",
+      message: "The email address is invalid"
+    });
+
+    check.is_rna({
+      key: "rna_sequence",
+      message: "The RNA sequence {{value}} is invalid"
+    });
+  });
 });
 
-webserver.pbs_command(function() {
-  return "echo GGGGGCCCCC | RNAfold";
+webserver.pbs_command(function(job_data) {
+  return util.format("echo %s | RNAfold", job_data.rna_sequence);
 });
 
 webserver.finish_job(function() {

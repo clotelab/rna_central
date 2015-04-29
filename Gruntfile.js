@@ -2,7 +2,7 @@
 
 module.exports = function(grunt) {
   var jshint_watched_files = ["Gruntfile.js", "lib/**/*.js", "test/**/*.js", "webservers/**/*.js"];
-  
+
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
     jshint: {
@@ -33,11 +33,11 @@ module.exports = function(grunt) {
     },
     shell: {
       bootstrap: {
-        command: "rm -r node_modules && rm -r lib/public/vendor && npm-check-updates -u && npm install && bower install"
+        command: "npm-check-updates && rm -rf node_modules && rm -rf lib/public/vendor && npm-check-updates -u && npm install && bower install"
       }
     }
   });
-  
+
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-mocha-test");
   grunt.loadNpmTasks("grunt-contrib-watch");
