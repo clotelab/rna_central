@@ -6,11 +6,11 @@ html
     link(rel='stylesheet', href=public_url("/vendor/pure/pure.css"))
     link(rel='stylesheet', href=public_url("/vendor/font-awesome/css/font-awesome.css"))
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href=!{public_url("http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css")}>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
     <link rel="stylesheet" href=!{public_url("/stylesheets/side-menu-old-ie.css")}>
     <![endif]-->
     <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href=!{public_url("http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css")}>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
     <link rel="stylesheet" href=!{public_url("/stylesheets/side-menu.css")}>
     <!--<![endif]-->
     link(rel="stylesheet", href=public_url("/stylesheets/style.css"))
@@ -27,4 +27,4 @@ html
                 a.pure-menu-link(href=scoped_url(_.first(tab.path).replace(/\/$/, "")))= tab.title
       = flash("warn")
       block content
-    script(src="/javascripts/ui.js")
+    script(src=public_url("/javascripts/ui.js"))
