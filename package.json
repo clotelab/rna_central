@@ -35,7 +35,6 @@
     "morgan": "^1.5.2",
     "mustache": "^2.0.0",
     "prettyjson": "^1.1.0",
-    "serve-favicon": "^2.2.0",
     "shelljs": "^0.4.0",
     "socket.io": "^1.3.5",
     "stylus": "^0.51.1",
@@ -53,7 +52,7 @@
     "grunt-shell": "^1.1.2",
     "jshint": "^2.7.0",
     "mocha": "^2.2.4",
-    "repl_plus": "./lib/util/repl_plus",
+    "repl_plus": "0.0.0",
     "sinon": "^1.14.1",
     "supervisor": "^0.6.0"
   }
