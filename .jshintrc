@@ -20,6 +20,8 @@
   "globals": {
     "_": true,
     "ap": true,
-    "basedir": true
+    "basedir": true,
+    "io": true,
+    "window": true
   }
 }

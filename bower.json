@@ -16,6 +16,7 @@
   "dependencies": {
     "pure": "~0.6.0",
     "font-awesome": "~4.3.0",
-    "highlightjs": "~8.5.0"
+    "highlightjs": "~8.5.0",
+    "jquery": "~2.1.4"
   }
 }
