@@ -6,7 +6,7 @@
     "start": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* forever lib/bin/www",
     "watch": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor ./lib/bin/www",
     "debug": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --debug ./lib/bin/www",
-    "repl": "npm install ./lib/util/repl_plus && repl_plus"
+    "repl": "repl_plus"
   },
   "dependencies": {
     "bluebird": "^2.9.25",
