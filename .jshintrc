@@ -19,6 +19,7 @@
   "undef": true,
   "globals": {
     "_": true,
+    "ap": true,
     "basedir": true
   }
 }

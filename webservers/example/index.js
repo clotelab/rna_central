@@ -67,7 +67,7 @@ webserver.pbs_command(function(job_data) {
 
 webserver.finish_job(function(files) {
   // "this" is the job itself, in case any fancy stuff from the job is needed
-  console.dir(files);
+  ap(files);
 });
 
 return webserver;
