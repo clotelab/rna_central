@@ -37,6 +37,7 @@ webserver.form_builder(function(fields, validators, widgets) {
       cssClasses: { field: ["pure-control-group"] },
       widget: widgets.text({ placeholder: "email@example.com" })
     }),
+
     rna_sequence: fields.string({
       cssClasses: { field: ["pure-control-group"] },
       widget: widgets.text({ placeholder: "GGGGGCCCCC" })
@@ -68,6 +69,10 @@ webserver.pbs_command(function(job_data) {
 webserver.finish_job(function(files) {
   // "this" is the job itself, in case any fancy stuff from the job is needed
   ap(files);
+});
+
+webserver.display_results(function(req, res, next) {
+  res.json(this);
 });
 
 return webserver;
