@@ -3,12 +3,10 @@
 "use strict";
 
 var debug  = require("debug")("rna_central");
-var app    = require("../app");
+var server = require("../app");
 var config = require("config");
 
-app.set("port", config.get("port"));
-
-var server = app.listen(app.get("port"), function() {
-  debug("Express server listening on port " + server.address().port);
-  debug("Running Node " + process.version);
+var server = server.listen(config.get("port"), function() {
+  debug("Express server listening on port %s", server.address().port);
+  debug("Running Node %s", process.version);
 });

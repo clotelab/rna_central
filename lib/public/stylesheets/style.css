@@ -26,7 +26,7 @@
   text-transform: none;
 }
 #layout #main .header {
-/** To edit this background, follow this link: 
+/** To edit this background, follow this link:
           http://svgeneration.com/generate/Oriental-Roof?scale=5&color-1=eeeeee&fill-1=ffffff&color-2=eeeeee&fill-2=ffffff&color-3=eeeeee&fill-3=ffffff&color-4=eeeeee&fill-4=ffffff&color-5=eeeeee&fill-5=ffffff&
       */
   background-color: #eee;
@@ -34,4 +34,9 @@
 }
 #layout #main .header h2 {
   color: #aaa;
+}
+#layout #main pre code {
+  background: #fafafa;
+  border: 1px solid #eee;
+  padding: 1em;
 }

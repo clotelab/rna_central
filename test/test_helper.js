@@ -1,9 +1,7 @@
 "use strict";
 
-var path                    = require("path");
-global._                    = require("underscore");
-global.basedir              = process.cwd();
-process.env.NODE_CONFIG_DIR = path.join(process.cwd(), "config");
+require("../lib/globals");
+
 process.env.NODE_ENV        = "test";
 var chai                    = require("chai");
 var chai_promises           = require("chai-as-promised");

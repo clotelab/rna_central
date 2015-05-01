@@ -19,6 +19,9 @@
   "undef": true,
   "globals": {
     "_": true,
-    "basedir": true
+    "ap": true,
+    "basedir": true,
+    "io": true,
+    "window": true
   }
 }
