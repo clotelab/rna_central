@@ -12,8 +12,8 @@ block content
       h2.content-subhead Submit job
       form.pure-form.pure-form-aligned(method="POST" action=(scoped_url("/submit_job")))
         fieldset
-          != form_builder.generate_html(previous_form)
+          != (previous_form || webserver.form).to_html()
           .pure-controls
-            button.pure-button.pure-button-primary(type="submit") 
+            button.pure-button.pure-button-primary(type="submit")
               i.fa.fa-server
               |  Submit job

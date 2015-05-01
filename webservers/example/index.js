@@ -31,7 +31,8 @@ var webserver   = module.exports = base_router({
   ]
 });
 
-webserver.form_builder(function(fields, validators, widgets) {
+webserver.form_config = function(fields, widgets) {
+  // "this" is the caolan/forms generator, but you should never need it. Just return the proper config object
   return {
     email: fields.string({
       cssClasses: { field: ["pure-control-group"] },
@@ -43,36 +44,40 @@ webserver.form_builder(function(fields, validators, widgets) {
       widget: widgets.text({ placeholder: "GGGGGCCCCC" })
     })
   };
-});
+};
 
-webserver.form_validator(function(form_data, validator) {
-  return validator(function(check) {
-    // "this" is the form itself, so you can flag it as invalid simply by making this.error_count !== 0
-
-    check.isEmail({
-      key: "email",
-      message: "The email address is invalid"
-    });
-
-    check.is_rna({
-      key: "rna_sequence",
-      message: "The RNA sequence {{value}} is invalid"
-    });
+webserver.form_validator = function(form_data, validate) {
+  // "this" is the caloan/forms instance generated from webserver.form_config
+  validate.isEmail({
+    key: "email",
+    message: "The email address is invalid",
+    allow_empty: true
   });
-});
 
-webserver.pbs_command(function(job_data) {
+  validate.is_rna({
+    key: "rna_sequence",
+    message: "The RNA sequence '{{value}}' is invalid"
+  });
+
+  if (!/^ggg/i.test(form_data.rna_sequence)) {
+    validate.set_invalid({
+      key: "rna_sequence",
+      message: "The RNA sequence must start with GGG"
+    });
+  }
+};
+
+webserver.generate_command = function(job_data) {
   // "this" is the job itself, incase any fancy stuff from the job is needed
   return util.format("echo %s | RNAfold", job_data.rna_sequence);
-});
+};
 
-webserver.finish_job(function(files) {
+webserver.finish_job = function(files) {
   // "this" is the job itself, in case any fancy stuff from the job is needed
   ap(files);
-});
+};
 
-webserver.display_results(function(req, res, next) {
+webserver.display_results = function(req, res, next) {
+  // "this" is the job itself, in case any fancy stuff from the job is needed
   res.json(this);
-});
-
-return webserver;
+};
