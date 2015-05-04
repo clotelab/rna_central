@@ -5,7 +5,8 @@
   "scripts": {
     "start": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* forever lib/bin/www",
     "watch": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor ./lib/bin/www",
-    "debug": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --debug ./lib/bin/www"
+    "debug": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --debug ./lib/bin/www",
+    "repl": "node ./lib/util/repl.js"
   },
   "dependencies": {
     "bluebird": "^2.9.25",

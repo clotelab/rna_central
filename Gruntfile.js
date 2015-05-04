@@ -33,7 +33,7 @@ module.exports = function(grunt) {
     },
     shell: {
       bootstrap: {
-        command: "npm-check-updates && rm -rf node_modules && rm -rf lib/public/vendor && npm-check-updates -u && npm install && bower install"
+        command: "npm-check-updates && rm -rf node_modules && rm -rf lib/public/vendor && npm-check-updates -u && npm cache clean && npm install && bower install"
       }
     }
   });
