@@ -6,7 +6,7 @@
     "start": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* forever lib/bin/www",
     "watch": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor ./lib/bin/www",
     "debug": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --debug ./lib/bin/www",
-    "repl": "repl_plus"
+    "repl": "node ./lib/util/repl.js"
   },
   "dependencies": {
     "bluebird": "^2.9.25",
@@ -33,6 +33,8 @@
     "mongoose-validator": "^1.0.3",
     "morgan": "^1.5.2",
     "mustache": "^2.0.0",
+    "nodemailer": "^1.3.4",
+    "nodemailer-direct-transport": "^1.0.2",
     "prettyjson": "^1.1.0",
     "session.socket.io": "^0.2.0",
     "shelljs": "^0.4.0",
@@ -52,7 +54,7 @@
     "grunt-shell": "^1.1.2",
     "jshint": "^2.7.0",
     "mocha": "^2.2.4",
-    "repl_plus": "0.0.0",
+    "nodemailer-stub-transport": "^1.0.0",
     "sinon": "^1.14.1",
     "supervisor": "^0.6.0"
   }
