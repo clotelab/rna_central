@@ -5,7 +5,7 @@ var config      = require("config");
 var db_uri      = config.get("db_uri");
 var warehouse   = require("../lib/warehouse")({ db_uri: db_uri });
 var pbs         = require("../lib/daemons/pbs");
-var daemon      = require("../lib/daemon")(warehouse, pbs);
+var daemon      = require("../lib/daemon").config(warehouse, pbs);
 module.exports  = test_helper;
 
 
