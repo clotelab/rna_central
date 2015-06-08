@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* forever lib/bin/www",
-    "watch": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor ./lib/bin/www",
+    "watch": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --extensions 'js,html,styl,json,txt,/lib/bin/www' ./lib/bin/www",
     "debug": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --debug ./lib/bin/www",
     "repl": "node ./lib/util/repl.js"
   },

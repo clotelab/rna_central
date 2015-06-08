@@ -1,0 +1,12 @@
+extends layout
+
+block main
+  #main
+    .header
+      h1= webserver.title
+      if current_tab
+        h2= current_tab.title
+      else
+        h2 ~
+    .content
+      block content

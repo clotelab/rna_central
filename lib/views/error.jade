@@ -1,4 +1,9 @@
+extends main
+
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  h1.content-subhead #{error.status}: #{message}
+  if error.stack
+    pre
+      code.nohighlight= error.stack
+  else
+    h2= error.status

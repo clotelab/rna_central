@@ -141,7 +141,7 @@ describe("Job model", function() {
 
       it("should support generate_command", function() {
         return job.saveAsync().spread(function(job) {
-          return job.webserver.generate_command({ rna_sequence: "GGGGGCCCCC" }).should.equal("echo GGGGGCCCCC | RNAfold");
+          return job.webserver.generate_command({ rna_sequence: "GGGGGCCCCC" }).should.equal("echo GGGGGCCCCC | RNAfold > undefined.out");
         });
       });
     });

@@ -1,19 +1,13 @@
-extends layout
+extends main
 
 block content
-  #main
-    .header
-      h1= webserver.title
-      h2= current_tab.title
-    .content
-      h2.content-subhead How to use this webserver
-      p
-        | This web server uses the software RNAmutants to compute, for each integer k, the minimum free energy structure MFE(k) and Boltzmann partition function Z(k) over all secondary structures of all k-point mutants of a given RNA sequence. In contrast to exhaustive enumeration, which is only possible for tiny sequences, RNAmutants uses dynamic programming to provide a complete analysis of the mutational landscape for a given RNA sequence.
-      h2.content-subhead Submit job
-      form.pure-form.pure-form-aligned(method="POST" action=(scoped_url("/submit_job")))
-        fieldset
-          != (previous_form || webserver.form).to_html()
-          .pure-controls
-            button.pure-button.pure-button-primary(type="submit")
-              i.fa.fa-server
-              |  Submit job
+  h2.content-subhead How to use this webserver
+  p!= current_tab.content.usage
+  h2.content-subhead Submit job
+  form.pure-form.pure-form-aligned(method="POST" action=(scoped_url("/submit_job")))
+    fieldset
+      != render_form(previous_form || webserver.form)
+      .pure-controls
+        button.pure-button.pure-button-primary(type="submit")
+          i.fa.fa-server
+          |  Submit job

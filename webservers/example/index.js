@@ -1,6 +1,7 @@
 "use strict";
 
 var path        = require("path");
+var fs          = require("fs");
 var util        = require("util");
 var base_router = require(path.join(basedir, "lib/subapp"));
 var webserver   = module.exports = base_router({
@@ -8,7 +9,7 @@ var webserver   = module.exports = base_router({
   module: module,
 
   // The title is the pretty name for the webserver. It is used for the UI across the webserver instance.
-  title: "RNAmutants",
+  title: "RNAfold",
 
   // The webserver is completely inaccessible until the active: true flag is set. It's possible that the cache needs to get busted
   // on this if changing the flag seems to have no effect, since require() calls are cached.
@@ -18,9 +19,27 @@ var webserver   = module.exports = base_router({
   // The title key is the pretty name for the tab, the path string / array are the subpaths that point to this tab and the template
   // key is a path that points to the HTML file for the tab. Files are looked up relative to the current directory, or in lib/views
   tabs: [
-    { title: "Server", path: "/submit_job", template: "server", meta: "form" },
-    { title: "Extra", path: "/extra", template: "index" },
-    { title: "Another", path: ["/about", "/about2"], template: "./views/about" }
+    {
+      title: "Home",
+      path: ["/", "/home"],
+      template: "index",
+      content: {
+        usage: fs.readFileSync(path.join(__dirname, "views/usage.html"), "utf-8")
+      }
+    },
+    {
+      title: "Server",
+      path: "/submit_job",
+      template: "server",
+      content: {
+        usage: "Provide a RNA sequence below to be folded using the RNAfold executable on our servers."
+      }
+    },
+    {
+      title: "About",
+      path: "/info",
+      template: "./views/about"
+    }
   ],
 
   // The list of files that will be copied to the workspace for the currently running job. If you use relative paths outside the
@@ -69,7 +88,7 @@ webserver.form_validator = function(form_data, validate) {
 
 webserver.generate_command = function(job_data) {
   // "this" is the job itself, incase any fancy stuff from the job is needed
-  return util.format("echo %s | RNAfold", job_data.rna_sequence);
+  return util.format("echo %s | RNAfold > %s.out", job_data.rna_sequence, this.nickname);
 };
 
 webserver.finish_job = function(files) {
@@ -79,5 +98,5 @@ webserver.finish_job = function(files) {
 
 webserver.display_results = function(req, res, next) {
   // "this" is the job itself, in case any fancy stuff from the job is needed
-  res.json(this);
+  res.render("results", { data: fs.readFileSync(this.workspace_file(".out"), "utf-8") });
 };

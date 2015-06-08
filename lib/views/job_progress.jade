@@ -1,13 +1,6 @@
-extends layout
+extends main
 
 block content
-  #main
-    .header
-      h1= webserver.title
-      h2 Job Progress
-    .content
-      h2.content-subhead= job.nickname
-      pre
-        code.json= JSON.stringify(job, null, 2)
-      pre
-        code.json= JSON.stringify(session, null, 2)
+  h2.content-subhead= job.nickname
+  pre
+    code.json= JSON.stringify(job, null, 2)

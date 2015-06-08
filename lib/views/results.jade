@@ -1,0 +1,9 @@
+extends main
+
+block content
+  h2.content-subhead Results for #{job.nickname}
+  pre
+    code.nohighlight= data
+  h2.content-subhead Based on job data from
+  pre
+    code.json= JSON.stringify(job, null, 2)

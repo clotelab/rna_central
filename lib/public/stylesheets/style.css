@@ -1,3 +1,12 @@
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.center {
+  display: table;
+  margin: 0 auto;
+}
 .button-success,
 .button-error,
 .button-warning,
@@ -17,6 +26,9 @@
 .button-secondary {
   background: #42b8dd;
 }
+.button-xlarge {
+  font-size: 125%;
+}
 #layout #menu {
   font-weight: 300;
 }
@@ -35,8 +47,23 @@
 #layout #main .header h2 {
   color: #aaa;
 }
-#layout #main pre code {
+#layout #main pre {
   background: #fafafa;
   border: 1px solid #eee;
   padding: 1em;
+}
+#layout #main pre code {
+  background: #fafafa;
+  padding: 0em;
+}
+#layout #main pre code.nohighlight {
+  color: #000;
+}
+#layout #main .content h3 {
+  margin: 2em 1em;
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1.8;
+  border-left: 5px solid #eee;
+  padding-left: 1em;
 }
