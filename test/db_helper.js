@@ -3,11 +3,13 @@
 var test_helper = require("./test_helper");
 var config      = require("config");
 var db_uri      = config.get("db_uri");
-var warehouse   = require("../lib/warehouse")({ db_uri: db_uri });
+var warehouse   = require("../lib/warehouse");
 var pbs         = require("../lib/daemons/pbs");
-var daemon      = require("../lib/daemon").config(warehouse, pbs);
+var daemon      = require("../lib/daemon");
 module.exports  = test_helper;
 
+warehouse.config({ db_uri: db_uri });
+daemon.config(warehouse, pbs);
 
 _.extend(test_helper, {
   db_uri: db_uri,

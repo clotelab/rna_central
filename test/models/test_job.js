@@ -57,8 +57,8 @@ describe("Job model", function() {
           return stub_save_hooks(new Job({
             email: "evansenter@gmail.com",
             webserver_name: "example",
-            state: state + "o'corgi"
-          })).saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.state.kind", "enum");
+            state: state + " o'corgi"
+          })).saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.state");
         });
       });
     });
