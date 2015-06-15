@@ -2,7 +2,7 @@ extends main
 
 block content
   h2.content-subhead How to use this webserver
-  p!= current_tab.content.usage
+  p!= page_data.content.usage
   h2.content-subhead Submit job
   form.pure-form.pure-form-aligned(method="POST" action=(scoped_url("/submit_job")))
     fieldset

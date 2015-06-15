@@ -67,3 +67,31 @@
   border-left: 5px solid #eee;
   padding-left: 1em;
 }
+#layout #main .content .flash + .content-subhead {
+  margin-top: 25px;
+}
+#layout #main .content .flash {
+  background: #d1ebee;
+  color: #668391;
+  margin-top: 1.5em;
+  border-radius: 3px;
+  padding: 1em 2em;
+}
+#layout #main .content .flash-warn,
+#layout #main .content .flash-form_error {
+  border: 1px solid #e5d4d6;
+  background: #f9f2f4;
+  color: #ca3c3c;
+}
+#layout #main .content form.pure-form .pure-control-group.has-success label {
+  color: #1cb841;
+}
+#layout #main .content form.pure-form .pure-control-group.has-success input {
+  border: 1px solid #1cb841;
+}
+#layout #main .content form.pure-form .pure-control-group.has-error label {
+  color: #ca3c3c;
+}
+#layout #main .content form.pure-form .pure-control-group.has-error input {
+  border: 1px solid #ca3c3c;
+}

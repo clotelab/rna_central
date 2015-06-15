@@ -1,12 +1,15 @@
 extends layout
+include ./flash.jade
 
 block main
   #main
     .header
       h1= webserver.title
-      if current_tab
-        h2= current_tab.title
+      if page_data
+        h2= page_data.title
       else
         h2 ~
     .content
+      +flash("warn")
+      +flash("form_error")
       block content

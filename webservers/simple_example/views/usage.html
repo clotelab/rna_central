@@ -1,0 +1,11 @@
+<h3>RNAfold 2.1.9</h3>
+
+<p>Calculate minimum free energy secondary structures and partition function of RNAs</p>
+
+<p>The program reads RNA sequences from stdin, calculates their minimum free energy (mfe) structure and prints to stdout the mfe structure in bracket notation and its free energy. If the -p option was given it also computes the partition function (pf) and base pairing probability matrix, and prints the free energy of the thermodynamic ensemble, the frequency of the mfe structure in the ensemble, and the ensemble diversity to stdout. It also produces PostScript files with plots of the resulting secondary structure graph and a "dot plot" of the base pairing matrix. The dot plot shows a matrix of squares with area proportional to the pairing probability in the upper right half, and one square for each pair in the minimum free energy struc- ture in the lower left half. For each pair i-j with probability p>10E-6 there is a line of the form</p>
+
+<pre>i j sqrt(p) ubox</pre>
+
+<p>in the PostScript file, so that the pair probabilities can be easily extracted.</p>
+
+<p>Sequences may be provided in a simple text format where each sequence occupies a single line. Output files are named "rna.ps" and "dot.ps". Existing files of the same name will be overwritten. It is also possible to provide sequence data in FASTA format. In this case, the first word (max. 42 char) of the FASTA header will be used for output file names. PostScript files "name_ss.ps" and "name_dp.ps" are produced for the structure and dot plot, respectively. Once FASTA input was provided all following sequences must be in FASTA format too. The program will continue to read new sequences until a line consisting of the single character @ or an end of file condition is encountered.</p>

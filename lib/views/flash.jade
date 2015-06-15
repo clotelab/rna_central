@@ -1,0 +1,12 @@
+mixin flash(type)
+  - var messages = flash(type)
+  unless _.isEmpty(messages)
+    .flash(class=("flash-" + type))
+      if type === "form_error"
+        p We encountered the following errors with your request:
+        ul
+          each message in messages
+            li= message
+      else
+        each message in messages
+          p= message

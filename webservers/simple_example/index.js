@@ -1,5 +1,11 @@
 "use strict";
 
+// ----------------------------------------------------------------------------------------------------
+// This is an example simple webserver using the rna_central framework, where most of the work is done
+// automagically by the framework. For an example where the settings are predominantly overridden, see
+// the complex_example
+// ----------------------------------------------------------------------------------------------------
+
 var path        = require("path");
 var fs          = require("fs");
 var util        = require("util");
@@ -22,7 +28,7 @@ var webserver   = module.exports = base_router({
     {
       title: "Home",
       path: ["/", "/home"],
-      template: "index",
+      template: "home",
       content: {
         usage: fs.readFileSync(path.join(__dirname, "views/usage.html"), "utf-8")
       }
@@ -40,13 +46,6 @@ var webserver   = module.exports = base_router({
       path: "/info",
       template: "./views/about"
     }
-  ],
-
-  // The list of files that will be copied to the workspace for the currently running job. If you use relative paths outside the
-  // scope of this folder YOU ARE GOING TO HAVE A BAD TIME. Keep all dependencies within this folder, so the file system doesn't
-  // become cripplingly coupled to the framework's location.
-  file_manifest: [
-    "./files/example_required_file.txt"
   ]
 });
 
@@ -54,13 +53,12 @@ webserver.form_config = function(fields, widgets) {
   // "this" is the caolan/forms generator, but you should never need it. Just return the proper config object
   return {
     email: fields.string({
-      cssClasses: { field: ["pure-control-group"] },
       widget: widgets.text({ placeholder: "email@example.com" })
     }),
 
     rna_sequence: fields.string({
-      cssClasses: { field: ["pure-control-group"] },
-      widget: widgets.text({ placeholder: "GGGGGCCCCC" })
+      label_text: "RNA Sequence",
+      widget: widgets.text({ placeholder: "GGGAAACCC" })
     })
   };
 };
@@ -69,19 +67,20 @@ webserver.form_validator = function(form_data, validate) {
   // "this" is the caloan/forms instance generated from webserver.form_config
   validate.isEmail({
     key: "email",
-    message: "The email address is invalid",
+    message: "{{value}} is not a valid email",
     allow_empty: true
   });
 
   validate.is_rna({
     key: "rna_sequence",
-    message: "The RNA sequence '{{value}}' is invalid"
+    message: "The provided RNA sequence is invalid"
   });
 
-  if (!/^ggg/i.test(form_data.rna_sequence)) {
+  if (form_data.rna_sequence && form_data.rna_sequence.length > 100) {
     validate.set_invalid({
       key: "rna_sequence",
-      message: "The RNA sequence must start with GGG"
+      message: "The RNA sequence must be under 100 nt. long",
+      allow_empty: true
     });
   }
 };
@@ -89,11 +88,6 @@ webserver.form_validator = function(form_data, validate) {
 webserver.generate_command = function(job_data) {
   // "this" is the job itself, incase any fancy stuff from the job is needed
   return util.format("echo %s | RNAfold > %s.out", job_data.rna_sequence, this.nickname);
-};
-
-webserver.finish_job = function(files) {
-  // "this" is the job itself, in case any fancy stuff from the job is needed
-  ap(files);
 };
 
 webserver.display_results = function(req, res, next) {

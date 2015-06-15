@@ -1,8 +1,8 @@
 extends main
 
 block content
-  h2.content-subhead How to use this webserver
-  p!= current_tab.content.usage
+  h2.content-subhead Overview
+  p!= page_data.content.usage
   a.pure-button.button-secondary.button-xlarge.center(href=scoped_url("submit_job"))
     i.fa.fa-server
     |  Run #{webserver.title} now

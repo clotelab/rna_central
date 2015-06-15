@@ -27,7 +27,7 @@ describe("Job model", function() {
   	var job;
 
   	beforeEach(function() {
-  		job = new Job({ email: "evansenter@gmail.com", webserver_name: "example" });
+  		job = new Job({ email: "evansenter@gmail.com", webserver_name: "simple_example" });
       stub_save_hooks(job);
   	});
 
@@ -46,7 +46,7 @@ describe("Job model", function() {
         return bluebird.map("unqueued queued running complete notified error".split(" "), function(state) {
           return stub_save_hooks(new Job({
             email: "evansenter@gmail.com",
-            webserver_name: "example",
+            webserver_name: "simple_example",
             state: state
           })).save();
         });
@@ -56,7 +56,7 @@ describe("Job model", function() {
       	return bluebird.map("unqueued queued running complete notified error".split(" "), function(state) {
           return stub_save_hooks(new Job({
             email: "evansenter@gmail.com",
-            webserver_name: "example",
+            webserver_name: "simple_example",
             state: state + " o'corgi"
           })).saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.state");
         });
@@ -86,14 +86,14 @@ describe("Job model", function() {
       describe("virtual workspace_path attribute", function() {
         it("should return the path to the workspace for the job", function() {
           return job.saveAsync()
-            .should.eventually.have.deep.property("[0].workspace_path").and.match(/example\/stubbed-haikunate-1234$/);
+            .should.eventually.have.deep.property("[0].workspace_path").and.match(/simple_example\/stubbed-haikunate-1234$/);
         });
       });
 
       describe("virtual job_workspace_file attribute", function() {
         it("should return the path to the file requested, having prefix equal to the job nickname", function() {
           return job.saveAsync().spread(function(job) {
-            return job.workspace_file(".sh").should.match(/example\/stubbed-haikunate-1234\/stubbed-haikunate-1234.sh$/);
+            return job.workspace_file(".sh").should.match(/simple_example\/stubbed-haikunate-1234\/stubbed-haikunate-1234.sh$/);
           });
         });
       });
@@ -129,8 +129,8 @@ describe("Job model", function() {
       });
 
       it("should clean up nicely", function() {
-				job.webserver_name = " example ";
-				return job.saveAsync().should.eventually.have.deep.property("[0].webserver_name", "example");
+				job.webserver_name = " simple_example ";
+				return job.saveAsync().should.eventually.have.deep.property("[0].webserver_name", "simple_example");
       });
     });
 
