@@ -6,9 +6,10 @@
 // the complex_example
 // ----------------------------------------------------------------------------------------------------
 
+var bluebird    = require("bluebird");
 var path        = require("path");
-var fs          = require("fs");
 var util        = require("util");
+var fs          = bluebird.promisifyAll(require("fs"));
 var base_router = require(path.join(basedir, "lib/subapp"));
 var webserver   = module.exports = base_router({
   // This is cookie cutter config. Having a hook to the module object allows us to handle things like paths correctly in lib/subapp
@@ -27,7 +28,7 @@ var webserver   = module.exports = base_router({
   tabs: [
     {
       title: "Home",
-      path: ["/", "/home"],
+      path: "/",
       template: "home",
       content: {
         usage: fs.readFileSync(path.join(__dirname, "views/usage.html"), "utf-8")
@@ -92,5 +93,9 @@ webserver.generate_command = function(job_data) {
 
 webserver.display_results = function(req, res, next) {
   // "this" is the job itself, in case any fancy stuff from the job is needed
-  res.render("results", { data: fs.readFileSync(this.workspace_file(".out"), "utf-8") });
+  fs.readFileAsync(this.workspace_file(".out"), "utf-8").then(function(file) {
+    res.render("results", { data: file });
+  }).catch(function(err) {
+    next(err);
+  });
 };
