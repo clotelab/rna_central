@@ -1,15 +1,25 @@
 extends layout
 include ./flash.jade
 
-block main
-  #main
-    .header
-      h1= webserver.title
-      if page_data
-        h2= page_data.title
-      else
-        h2 ~
-    .content
-      +flash("warn")
-      +flash("form_error")
-      block content
+block body
+  #layout
+    a#menuLink.menu-link(href="#menu")
+      span
+    #menu
+      .pure-menu.pure-menu-open
+        a.pure-menu-heading(href=scoped_url())= webserver.title
+        ul.pure-menu-list
+          each tab in webserver.tabs
+            li.pure-menu-item(class=(_.isObject(page_data) && page_data.title === tab.title ? "pure-menu-selected" : ""))
+              a.pure-menu-link(href=scoped_url(_.first(tab.path).replace(/\/$/, "")))= tab.title
+    #main
+      .header
+        h1= webserver.title
+        if page_data
+          h2= page_data.title
+        else
+          h2 ~
+      .content
+        +flash("warn")
+        +flash("form_error")
+        block content
