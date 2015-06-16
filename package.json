@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* forever lib/bin/www",
-    "watch": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --extensions 'js,html,styl,json,txt,/lib/bin/www' ./lib/bin/www",
+    "watch": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --extensions 'js,jade,html,styl,txt,/lib/bin/www' ./lib/bin/www",
     "debug": "BLUEBIRD_DEBUG=1 DEBUG=rna_central* supervisor --debug ./lib/bin/www",
     "repl": "node ./lib/util/repl.js"
   },
@@ -28,6 +28,7 @@
     "glob": "^5.0.10",
     "haikunator": "^0.2.2",
     "jade": "^1.11.0",
+    "jsonfile": "^2.0.1",
     "methods": "^1.1.1",
     "mongoose": "^4.0.5",
     "mongoose-validator": "^1.2.0",

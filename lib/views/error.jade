@@ -1,9 +1,10 @@
-extends main
+extends layout
 
-block content
-  h1.content-subhead #{error.status}: #{message}
-  if error.stack
-    pre
-      code.nohighlight= error.stack
-  else
-    h2= error.status
+block body
+  .content
+    h1.content-subhead #{error.status}: #{message}
+    if error.stack
+      pre
+        code.nohighlight= error.stack
+    else
+      h2= error.status
