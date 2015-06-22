@@ -6,7 +6,7 @@ var test_helper = require("../db_helper");
 var sinon       = require("sinon");
 
 describe("Job model", function() {
-	var Job = test_helper.warehouse.Job;
+	var Job = test_helper.db.Job;
 
   var stub_save_hooks = function(job) {
     sinon.stub(job, "submit");
@@ -65,13 +65,13 @@ describe("Job model", function() {
 
     describe("with stubbed nickname", function() {
       beforeEach(function() {
-        sinon.stub(test_helper.warehouse.Job.schema.statics, "haikunate", function() {
+        sinon.stub(test_helper.db.Job.schema.statics, "haikunate", function() {
           return "stubbed-haikunate-1234";
         });
       });
 
       afterEach(function() {
-        test_helper.warehouse.Job.schema.statics.haikunate.restore();
+        test_helper.db.Job.schema.statics.haikunate.restore();
       });
 
       it("is assigned a random string if not provided", function() {
@@ -106,9 +106,9 @@ describe("Job model", function() {
     });
 
     describe("email", function() {
-      it("is required", function() {
+      it("is not required", function() {
       	job.email = undefined;
-        return job.saveAsync().should.eventually.be.rejected.and.have.deep.property("errors.email.kind", "required");
+        return job.saveAsync().should.eventually.have.deep.property("[0].email").be.undefined;
       });
 
       it("must be valid", function() {
@@ -141,7 +141,7 @@ describe("Job model", function() {
 
       it("should support generate_command", function() {
         return job.saveAsync().spread(function(job) {
-          return job.webserver.generate_command({ rna_sequence: "GGGGGCCCCC" }).should.equal("echo GGGGGCCCCC | RNAfold > undefined.out");
+          return job.webserver.generate_command({ rna_sequence: "GGGGGCCCCC" }).should.equal("echo GGGGGCCCCC | RNAfold --noPS > undefined.out");
         });
       });
     });
