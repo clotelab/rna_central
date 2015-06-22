@@ -89,6 +89,8 @@ webserver.display_results = function(req, res, next) {
   fs.readFileAsync(this.workspace_file(".out"), "utf-8").then(function(file) {
     res.render("results", { data: file });
   }).catch(function(err) {
+    console.log(err);
+
     next(err);
   });
 };
