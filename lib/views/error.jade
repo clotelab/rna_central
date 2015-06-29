@@ -3,7 +3,7 @@ extends layout
 block body
   .content
     h1.content-subhead #{error.status}: #{message}
-    if error.stack
+    if error.stack !== undefined
       pre
         code.nohighlight= error.stack
     else

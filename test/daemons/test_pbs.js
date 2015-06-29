@@ -2,9 +2,10 @@
 
 var bluebird    = require("bluebird");
 var test_helper = require("../test_helper");
-var pbs         = require("../../lib/daemons/pbs");
 var path        = require("path");
 var fs          = bluebird.promisifyAll(require("fs"));
+var catcher     = require("../../lib/util/catcher");
+var pbs         = require("../../lib/daemons/pbs");
 
 describe("PBS daemon", function() {
   var simple_job = function(string) {
@@ -20,12 +21,8 @@ describe("PBS daemon", function() {
     beforeEach(function() {
       return fs.readFileAsync(path.join(__dirname, "../files/qstat.txt"), "utf8").then(function(file) {
         qstat_output = file;
-      }).catch(console.log.bind(console));
+      }).catch(catcher);
     });
-
-    // it("should have qstat_output set", function() {
-    //   return console.dir(pbs.parse_qstat(qstat_output));
-    // });
   });
 
   describe("parse_line", function() {
